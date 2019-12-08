@@ -7,3 +7,19 @@ theme = "hugo-theme-techdoc"
 
     # Souce Code repository section
     description = "An open guide that walks through the basic concepts of Amazon QLDB"
+    github_repository = "https://github.com/mlewis7127/qldbguide"
+
+    # Documentation repository section
+    # documentation repository (set edit link to documentation repository)
+    github_doc_repository = "https://github.com/mlewis7127/qldbguide"
+
+    # Documentation Menu section
+    # Menu style settings
+    menu_style = "open-menu" # "open-menu" or "slide-menu"
+
+
+# Global menu section
+[[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
