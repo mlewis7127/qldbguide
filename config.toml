@@ -17,9 +17,3 @@ theme = "hugo-theme-techdoc"
     # Menu style settings
     menu_style = "open-menu" # "open-menu" or "slide-menu"
 
-
-# Global menu section
-[[menu.main]]
-    name = "Home"
-    url = "/"
-    weight = 1
