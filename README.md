@@ -1,2 +1,2 @@
-# qldbguide.com
+# qldbguide
 Repository for the online guide to Amazon QLDB
