@@ -6,4 +6,10 @@ draft: false
 
 # Amazon QLDB Guide
 
-A primer on the Amazon Quantum Ledger Database (QLDB) centralised ledger database
+### Quantum Ledger Database (QLDB) explained
+
+![logo](/images/QLDB_light-bg.png)
+
+**A guide to the AWS centralised ledger database**
+
+Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), which in turn was inspired by Craig Kerstein's [Postgres Guide](http://postgresguide.com/)
