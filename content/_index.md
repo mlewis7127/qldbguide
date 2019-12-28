@@ -1,6 +1,7 @@
 ---
 title: "Amazon QLDB Guide"
-date: 2019-12-08T22:00:16Z
+publishdate: 2019-12-08T22:00:16Z
+lastmod: 2019-12-28
 draft: false
 ---
 

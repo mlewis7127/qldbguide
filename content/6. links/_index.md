@@ -1,6 +1,7 @@
 ---
 title: "Useful Links"
 date: 2019-12-18T22:21:24Z
+lastmod: 2019-12-18
 draft: false
 weight: 60
 ---
