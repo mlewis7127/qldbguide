@@ -1,12 +1,12 @@
 ---
 title: "What is QLDB"
 date: 2019-12-08T22:50:19Z
-lastmod: 2019-12-28
+lastmod: 2019-12-29
 weight: 10
 draft: false
 ---
 
-The [landing page](https://aws.amazon.com/qldb/) for Amazon Quantum Ledger Database (QLDB) states it is:
+Amazon Quantum Ledger Database (QLDB) is described on its [home page](https://aws.amazon.com/qldb/) as:
 
 > a fully managed ledger database that provides a transparent, immutable, and cryptographically
 > verifiable transaction log owned by a central trusted authority. Amazon QLDB tracks each and
