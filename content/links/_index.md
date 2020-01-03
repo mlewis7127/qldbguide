@@ -1,7 +1,7 @@
 ---
 title: "Useful Links"
 date: 2019-12-18T22:21:24Z
-lastmod: 2019-12-18
+lastmod: 2020-01-03
 draft: false
 weight: 60
 ---
@@ -23,3 +23,7 @@ weight: 60
 ## Reinvent Videos
 
 * [Re:Invent 2019 - An engineer's deep dive on why this is a game changer](https://www.youtube.com/watch?v=ZfYDl4kaVCo)
+
+## Articles
+
+* [In Data We Trust: The Why And How Of Amazon QLDB, A Purpose-Built, Immutable And Verifiable Database](https://www.forbes.com/sites/amazonwebservices/2019/12/23/in-data-we-trust-the-why-and-how-of-amazon-qldb-a-purpose-built-immutable-and-verifiable-database/)
