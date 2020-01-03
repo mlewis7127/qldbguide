@@ -1,7 +1,7 @@
 ---
 title: "What is QLDB"
 date: 2019-12-08T22:50:19Z
-lastmod: 2019-12-29
+lastmod: 2020-01-03
 weight: 10
 draft: false
 ---
