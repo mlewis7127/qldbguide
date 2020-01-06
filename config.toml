@@ -5,6 +5,8 @@ theme = "hugo-theme-techdoc"
 
 [Params]
 
+    images = ["QLDB_light-bg.png"]
+
     # Souce Code repository section
     description = "An open guide that walks through the basic concepts of Amazon QLDB"
     github_repository = "https://github.com/mlewis7127/qldbguide"
