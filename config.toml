@@ -3,9 +3,8 @@ languageCode = "en-gb"
 title = "QLDB Guide"
 theme = "hugo-theme-techdoc"
 
-googleAnalytics = "UA-155541706-1"
-
 [Params]
+    google_analytics_id = "UA-155541706-1"
 
     images = ["/images/QLDB_light-bg.png"]
 
