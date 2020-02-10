@@ -5,6 +5,7 @@ lastmod: 2020-01-05
 weight: 30
 draft: false
 ---
+# Database Freedom
 
 AWS provide a large portfolio of purpose built databases that allow customers to choose the most appropriate one.
 

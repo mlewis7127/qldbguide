@@ -6,6 +6,8 @@ weight: 20
 draft: false
 ---
 
+# How QLDB Works
+
 A basic overview of how QLDB works is shown in the diagram below:
 
 ![How QLDB Works](/images/How-QLDB-Works.png)

@@ -6,7 +6,9 @@ weight: 10
 draft: false
 ---
 
-### Overview
+# What is QLDB
+
+## Overview
 
 Amazon Quantum Ledger Database [(QLDB)](https://aws.amazon.com/qldb/) is:
 
@@ -25,7 +27,7 @@ All of these important features are expanded on in [key concepts](../key-concept
 * **Familiarity** - QLDB supports [PartiQL](https://partiql.org/) which is a SQL-compatible open standard query language. QLDB supports [Amazon ION](http://amzn.github.io/ion-docs/) document data format. This is a superset of JSON that supports a rich type system.
 
 
-### Why use QLDB
+## Why use QLDB
 
 AWS provide a broad portfolio of purpose-built databases. This allows a developer to pick the right tool for the job, rather than using a one size fits all solution for everything. More details on the positioning of QLDB within this portfolio is provided in the section on [database freedom](../database-freedom/).
 
