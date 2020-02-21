@@ -24,24 +24,17 @@ Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), whic
 {{< block "grid-3" >}}
 <div id="no2" class="code">
 <h4>Create a Ledger</h4>
-    CreateLedgerRequest
+Create a new ledger with tables and indexes
 </div>
 
 <div id="no3" class="code">
-<h4>Create a Ledger</h4>
-    CreateLedgerRequest
+<h4>Insert and Update Data</h4>
+Insert a new document and update to create multiple document revisions
 </div>
 
 <div id="no4" class="code">
-<h4>Create a Ledger</h4>
-    CreateLedgerRequest 
+<h4>Query data and Crytographically Verify</h4>
+Query the current state of a document or its historical states. Crytographically
+verify the change history of the data
 </div>
 {{< /block >}}
-
-
-
-
-
-
-
-

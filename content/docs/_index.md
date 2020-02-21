@@ -6,11 +6,17 @@ draft: false
 weight: 1
 ---
 
-# Introduction
+# QLDB Guide
 
-This section sets out a basic introduction to Amazon QLDB, covering:
+QLDB Guide is broken down into a number of discrete sections covering:
 
-* [What is QLDB](./what-is-qldb/) - a general overview of QLDB
-* [How QLDB Works](./how-qldb-works/) - details on the implementation of QLDB
-* [Database Freedom](./database-freedom/) - positioning QLDB in the AWS portfolio of purpose-built databases
-* [Key Concepts](./key-concepts/) - details on the core QLDB concepts
+* [What is QLDB](./introduction/what-is-qldb/) - a general overview of QLDB
+* [Getting Started](./introduction/getting-started/) - how to take your first steps in using QLDB
+* [Advanced Topics](./introduction/advanced-topics/) - more advanced topics such as streaming
+* [Operations](./introduction/operations/) - operational concerns when using QLDB
+* [Security](./introduction/security/) - the main security features in QLDB
+* [Useful Links](./introduction/useful-links/) - links to other resources to help you learn
+
+
+
+
