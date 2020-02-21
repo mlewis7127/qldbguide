@@ -3,7 +3,7 @@ title: "Database Freedom"
 date: 2019-12-29T21:57:35Z
 lastmod: 2020-01-05
 weight: 30
-draft: false
+draft: true
 ---
 # Database Freedom
 
