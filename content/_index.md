@@ -21,36 +21,23 @@ Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), whic
 {{< /column >}}
 {{< /block >}}
 
-{{< block "grid-3 mt-3" >}}
-{{< column >}}
-<div id="no2">
-<div><h4>Create a Ledger</h4></div>
-<div class="code">
-    CreateLedgerRequest request = new CreateLedgerRequest()
-                .withName(ledgerName)
-                .withPermissionsMode(PermissionsMode.ALLOW_ALL);
+{{< block "grid-3" >}}
+<div id="no2" class="code">
+<h4>Create a Ledger</h4>
+    CreateLedgerRequest
 </div>
+
+<div id="no3" class="code">
+<h4>Create a Ledger</h4>
+    CreateLedgerRequest
 </div>
-{{< /column >}}
-{{< column >}}
-<div id="no3">
-<div><h4>Create a Ledger</h4></div>
-<div class="code">
-    CreateLedgerRequest request = new CreateLedgerRequest()
-                .withName(ledgerName)
-                .withPermissionsMode(PermissionsMode.ALLOW_ALL);
+
+<div id="no4" class="code">
+<h4>Create a Ledger</h4>
+    CreateLedgerRequest 
 </div>
-{{< /column >}}
-{{< column >}}
-<div id="no4">
-<div><h4>Create a Ledger</h4></div>
-<div class="code">
-    CreateLedgerRequest request = new CreateLedgerRequest()
-                .withName(ledgerName)
-                .withPermissionsMode(PermissionsMode.ALLOW_ALL);
-</div>
-{{< /column >}}
 {{< /block >}}
+
 
 
 
