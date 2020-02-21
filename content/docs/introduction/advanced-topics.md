@@ -1,12 +1,15 @@
 ---
-title: "QLDB Streaming"
-date: 2019-12-28T21:32:24Z
-lastmod: 2019-12-28
+title: "Advanced Topics"
+date: 2020-02-21T18:41:23Z
+lastmod: 2020-02-21
+weight: 30
 draft: false
-weight: 20
 ---
+
+## Streaming
 
 At Reinvent 2019, AWS announcing the private preview of QLDB Streaming
 
 ![Streaming Preview](/images/QLDB-streaming.png)
+
 

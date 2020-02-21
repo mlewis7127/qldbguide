@@ -1,7 +1,23 @@
 baseURL = "https://qldbguide.com/"
 languageCode = "en-gb"
 title = "QLDB Guide"
-theme = "hugo-theme-techdoc"
+theme = "compose"
+enableGitInfo = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+    style = "monokai"
+    tabWidth = 2
 
 [Params]
     google_analytics_id = "UA-155541706-1"

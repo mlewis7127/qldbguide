@@ -1,0 +1,23 @@
+<nav class="wrap nav">
+    <a href="{{ .Site.BaseURL }}"><img height="30" width="30" src='{{ absURL "images/QLDB_light-bg.png" }}'> QLDB Guide
+    </a>
+    {{- partial "search.html" . }}
+    <ul class="nav_body">
+        {{- $p := . }}
+        {{- range .Site.Menus.main }}
+        <li class="nav-item">
+            {{- $active := or ($p.IsMenuCurrent "main" .) ($p.HasMenuCurrent "main" .) }}
+            {{- with .Page }}
+            {{- $active = or $active ( $.IsDescendant .)  }}
+            {{- end }}
+            {{- $url := urls.Parse .URL }}
+            {{- $baseurl := $.Site.BaseURL }}
+            <a class="nav-link{{if $active }} active{{end}}" href="{{ with .Page }}{{ $baseurl }}{{ .Permalink }}{{ else }}{{ $baseurl }}{{ .URL }}{{ end }}"><span{{if $active }} class="active"{{end}}>{{ .Name }}</span></a>
+        </li>
+        {{- end }}
+        {{ $repo := .Site.Params.source }}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ $repo.url }}" target="_blank">{{ $repo.name }}</a>
+        </li>
+    </ul>
+</nav>
