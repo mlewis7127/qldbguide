@@ -2,6 +2,7 @@ baseURL = "https://qldbguide.com/"
 languageCode = "en-gb"
 title = "QLDB Guide"
 theme = "compose"
+enableGitInfo = true
 
 [markup]
   [markup.goldmark]
