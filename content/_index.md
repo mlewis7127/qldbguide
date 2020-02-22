@@ -17,7 +17,7 @@ Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), whic
 
 {{< /column >}}
 {{< column >}}
-![logo](/images/qldb-guide.png)
+![logo](/images/QLDB-Guide.svg)
 {{< /column >}}
 {{< /block >}}
 
