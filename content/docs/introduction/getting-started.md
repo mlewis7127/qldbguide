@@ -21,10 +21,9 @@ The easiest way to get started is by creating a ledger through the AWS Console. 
 
 You can also create a ledger directly via the AWS Command Line Interface (CLI), using the createLedger call. With this, you must specify a ledger name and a permissions mode. The only permissions mode currently supported is ALLOW_ALL
 
-
-```
+{{< codeblock "language-shell" >}}
 aws qldb create-ledger --name <ledger-name> --permissions-mode ALLOW_ALL --tags name=qldb-guide
-```
+{{< /codeblock  >}}
 
 When you create a ledger, deletion protection is enabled by default. This is a feature in QLDB that prevents ledgers from being deleted by any user. You can disable deletion protection on ledger creation by using the `--no-deletion-protection` parameter.
 
@@ -35,7 +34,7 @@ Optionally, you can also specify tags to attach to your ledger.
 
 You can create a ledger using CloudFormation. The example file below uses the same details as the CLI example above.
 
-```
+{{< codeblock "language-json" >}}
 create-ledger-cf.json
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
@@ -56,7 +55,7 @@ create-ledger-cf.json
     }
   }
 }
-```
+{{< /codeblock >}}
 To deploy the template, run the following from a terminal window in the same directory:
 
 ```
