@@ -56,6 +56,7 @@ create-ledger-cf.json
   }
 }
 {{< /codeblock >}}
+
 To deploy the template, run the following from a terminal window in the same directory:
 
 ```
