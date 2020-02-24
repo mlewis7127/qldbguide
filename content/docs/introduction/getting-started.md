@@ -21,10 +21,9 @@ The easiest way to get started is by creating a ledger through the AWS Console. 
 
 You can also create a ledger directly via the AWS Command Line Interface (CLI), using the createLedger call. With this, you must specify a ledger name and a permissions mode. The only permissions mode currently supported is ALLOW_ALL
 
-
-```
+{{< codeblock "language-shell" >}}
 aws qldb create-ledger --name <ledger-name> --permissions-mode ALLOW_ALL --tags name=qldb-guide
-```
+{{< /codeblock  >}}
 
 When you create a ledger, deletion protection is enabled by default. This is a feature in QLDB that prevents ledgers from being deleted by any user. You can disable deletion protection on ledger creation by using the `--no-deletion-protection` parameter.
 
@@ -35,7 +34,7 @@ Optionally, you can also specify tags to attach to your ledger.
 
 You can create a ledger using CloudFormation. The example file below uses the same details as the CLI example above.
 
-```
+{{< codeblock "language-json" >}}
 create-ledger-cf.json
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
@@ -56,12 +55,13 @@ create-ledger-cf.json
     }
   }
 }
-```
+{{< /codeblock >}}
+
 To deploy the template, run the following from a terminal window in the same directory:
 
-```
+{{< codeblock "language-shell" >}}
 aws cloudformation deploy --template-file ./create-ledger-cf.json --stack-name qldb-demo 
-```
+{{< /codeblock  >}}
 
 **Create ledger via Serverless Framework**
 
@@ -69,7 +69,7 @@ QLDB is a fully serverless database, and it is likely that many people will use 
 
 Serverless Framework allows you to use CloudFormation in a `resources` section. The example below will create a QLDB ledger using the same parameters as the other examples.
 
-```
+{{< codeblock  "language-yaml" >}}
 service: qldbguidedemo
 
 provider:
@@ -92,7 +92,7 @@ resources:
           - 
             Key: name
             Value: qldb-guide
-```
+{{< /codeblock  >}}
 
 
 ## Create Tables
@@ -125,7 +125,7 @@ There is currently no way of creating a table and an index in CloudFormation or 
 
 The following is a snippet from a `serverless.yml` file to show how this is achieved:
 
-```
+{{< codeblock  "language-yaml" >}}
 resources:
   Resources:
     qldbGuideLedger:
@@ -152,7 +152,7 @@ resources:
       Properties:
         ServiceToken: !GetAtt CreateIndexLambdaFunction.Arn
         Version: 1.0  #change this to force redeploy
-```
+{{< /codeblock >}}
 
 This shows how the custom Lambda function to create the index is only invoked once the Lambda function to create the table has successfully run, and this in turn is dependent on the creation of the ledger itself.
 

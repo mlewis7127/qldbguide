@@ -20,4 +20,5 @@
 {{- $styles := resources.Get "sass/main.sass" | resources.ExecuteAsTemplate "main.sass" . | resources.ToCSS $options | resources.Fingerprint "sha512" }}
 <link rel = 'stylesheet' href = '{{ $styles.Permalink }}' integrity = '{{ $styles.Data.Integrity }}'>
 
-<link rel = 'stylesheet' href = 'css/custom.css' type='text/css'>
+<link rel = 'stylesheet' href = '/css/custom.css' type='text/css' />
+<link rel = 'stylesheet' href = '/css/prism.css' type='text/css' />
