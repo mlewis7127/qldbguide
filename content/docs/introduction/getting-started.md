@@ -59,9 +59,9 @@ create-ledger-cf.json
 
 To deploy the template, run the following from a terminal window in the same directory:
 
-```
+{{< codeblock "language-shell" >}}
 aws cloudformation deploy --template-file ./create-ledger-cf.json --stack-name qldb-demo 
-```
+{{< /codeblock  >}}
 
 **Create ledger via Serverless Framework**
 
@@ -69,7 +69,7 @@ QLDB is a fully serverless database, and it is likely that many people will use 
 
 Serverless Framework allows you to use CloudFormation in a `resources` section. The example below will create a QLDB ledger using the same parameters as the other examples.
 
-```
+{{< codeblock  "language-yaml" >}}
 service: qldbguidedemo
 
 provider:
@@ -92,7 +92,7 @@ resources:
           - 
             Key: name
             Value: qldb-guide
-```
+{{< /codeblock  >}}
 
 
 ## Create Tables
@@ -125,7 +125,7 @@ There is currently no way of creating a table and an index in CloudFormation or 
 
 The following is a snippet from a `serverless.yml` file to show how this is achieved:
 
-```
+{{< codeblock  "language-yaml" >}}
 resources:
   Resources:
     qldbGuideLedger:
@@ -152,7 +152,7 @@ resources:
       Properties:
         ServiceToken: !GetAtt CreateIndexLambdaFunction.Arn
         Version: 1.0  #change this to force redeploy
-```
+{{< /codeblock >}}
 
 This shows how the custom Lambda function to create the index is only invoked once the Lambda function to create the table has successfully run, and this in turn is dependent on the creation of the ledger itself.
 
