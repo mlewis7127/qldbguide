@@ -44,11 +44,9 @@ img[alt="logo"] {
   color: #FFFFFF;
 }
 
-nav.wrap {
-    padding: 0 25px;
-}
-
 .wrap {
+  margin: 0 auto;
+  padding: 0 20px;
   max-width: 100%;
 }
 
@@ -65,4 +63,12 @@ section {
 
 .pt-4 {
     padding-top: 1rem;
+}
+
+body.page-section .pt-4 {
+  padding-top: 6rem;
+}
+
+.nav_header {
+  padding: 0 20px;
 }
