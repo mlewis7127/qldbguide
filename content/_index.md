@@ -1,10 +1,8 @@
 +++
 title = "Amazon QLDB Guide"
 +++
-
 {{< block "grid-2 mt-2" >}}
 {{< column >}}
-
 # Amazon QLDB Guide
 
 ### Quantum Ledger Database (QLDB) explained
@@ -20,7 +18,7 @@ Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), whic
 ![logo](/images/QLDB-Guide.svg)
 {{< /column >}}
 {{< /block >}}
-
+{{< darksection >}}
 {{< block "grid-3" >}}
 <div id="no2" class="code">
 <h4>Create a Ledger</h4>
@@ -38,3 +36,10 @@ Query the current state of a document or its historical states. Crytographically
 verify the change history of the data
 </div>
 {{< /block >}}
+{{</ darksection >}}
+{{< greysection >}}
+<h2>Amazon Quantum Ledger Database (QLDB) is</h2>
+a fully managed ledger database that provides a transparent, immutable, and cryptographically verifiable transaction log 
+owned by a central trusted authority. Amazon QLDB tracks each and every application data change and maintains a complete 
+and verifiable history of changes over time
+{{</ greysection >}}

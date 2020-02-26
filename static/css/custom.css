@@ -24,3 +24,45 @@ img[alt="logo"] {
     transform: translate(0, 0);
   }
 }
+
+.greySection {
+  background: #e6e8ec;
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  margin: 0 -25px;
+  padding: 50px;
+}
+
+.darkerSection {
+  background: #3d464f;
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  margin: 0 -25px;
+  padding: 50px;
+  color: #FFFFFF;
+}
+
+nav.wrap {
+    padding: 0 25px;
+}
+
+.wrap {
+  max-width: 100%;
+}
+
+section {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.indexSectionContent {
+  max-width: 420px;
+  text-align: center;
+}
+
+.pt-4 {
+    padding-top: 1rem;
+}
