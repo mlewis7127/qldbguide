@@ -1,0 +1,9 @@
+{{- $modifier := .Get 0 -}}
+<span id="{{ $modifier }}"></span>
+<script>
+  var typed = new Typed('#{{ $modifier }}', {
+    strings: ['{{- .Inner -}}'],
+    typeSpeed: 50,
+    startDelay: 50
+  });
+</script>
