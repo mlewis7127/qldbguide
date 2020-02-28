@@ -62,7 +62,15 @@ section {
 }
 
 .pt-4 {
-    padding-top: 1rem;
+    padding-top: 6rem;
+}
+
+.page-home {
+  max-width: 100%;
+}
+
+.page-home .pt-4 {
+    padding-top: 1em;
 }
 
 body.page-section .pt-4 {
