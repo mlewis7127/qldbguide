@@ -30,7 +30,8 @@ img[alt="logo"] {
   position: relative;
   box-sizing: border-box;
   border: none;
-  margin: 0 -25px;
+  margin: 8px -25px 5px;
+  box-shadow: 0px 5px 5px grey;
   padding: 50px;
 }
 
@@ -38,8 +39,9 @@ img[alt="logo"] {
   background: #3d464f;
   position: relative;
   box-sizing: border-box;
+  box-shadow: 0px 5px 5px black;
   border: none;
-  margin: 0 -25px;
+  margin: 8px -25px 5px;
   padding: 50px;
   color: #FFFFFF;
 }
@@ -80,6 +82,13 @@ body.page-section .pt-4 {
 .nav_header {
   padding: 0px;
   background-color: #e6e8ec;
-  box-shadow: 0px 0px 5px grey;
+  box-shadow: 0px 5px 5px grey;
   height: 60px;
+}
+
+.spacer {
+  height: 20px;
+  line-height: 1em;
+  box-sizing: border-box;
+  margin: 0 -25px;
 }

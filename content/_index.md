@@ -18,6 +18,7 @@ Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), whic
 ![logo](/images/QLDB-Guide.svg)
 {{< /column >}}
 {{< /block >}}
+{{< spacer >}}
 {{< darksection >}}
 {{< block "grid-3" >}}
 <div id="no2" class="code">
