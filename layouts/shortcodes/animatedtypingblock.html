@@ -1,5 +1,10 @@
 {{- $modifier := .Get 0 -}}
-<span id="{{ $modifier }}"></span>
+<div class="editor">
+    <div class="title-bar"><span class="title">QLDB Guide</span></div>
+    <div class="text-body">
+    <span id="{{ $modifier }}"></span>
+    </div>
+</div>
 <script>
   var typed = new Typed('#{{ $modifier }}', {
     strings: ['{{- .Inner -}}'],

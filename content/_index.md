@@ -40,9 +40,13 @@ verify the change history of the data
 {{</ darksection >}}
 {{< greysection >}}
 <h2>Amazon Quantum Ledger Database (QLDB) is</h2>
-{{< animatedtypingblock "example" >}}
 a fully managed ledger database that provides a transparent, immutable, and cryptographically verifiable transaction log 
 owned by a central trusted authority. Amazon QLDB tracks each and every application data change and maintains a complete 
-and verifiable history of changes over time{{</ animatedtypingblock >}}
-<img src="/images/QLDB_light-bg.svg" />
+and verifiable history of changes over time
+
+{{< spacer >}}
+
+{{< animatedtypingblock "exampleQuery" >}}
+SELECT v.VIN FROM Vehicle [ AS ] v
+{{</ animatedtypingblock >}}
 {{</ greysection >}}
