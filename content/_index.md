@@ -44,9 +44,11 @@ a fully managed ledger database that provides a transparent, immutable, and cryp
 owned by a central trusted authority. Amazon QLDB tracks each and every application data change and maintains a complete 
 and verifiable history of changes over time
 
-{{< spacer >}}
+<img src="/images/QLDB-overview.svg" />
 
+{{</ greysection >}}
+{{< whitesection >}}
 {{< animatedtypingblock "exampleQuery" >}}
 SELECT v.VIN FROM Vehicle [ AS ] v
 {{</ animatedtypingblock >}}
-{{</ greysection >}}
+{{</ whitesection >}}

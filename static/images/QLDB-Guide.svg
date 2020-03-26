@@ -9,24 +9,24 @@
 	.st3{fill:#FFFFFF;}
 	.st4{font-size:58.7299px;}
 </style>
-<rect x="142.4" y="33" class="st0" width="811.61" height="127.25"/>
+<rect x="142.4" y="33" class="st0" width="811.6" height="127.2"/>
 <text transform="matrix(1.0322 0 0 1 142.3979 110.0527)" class="st1 st2">QLDB Guide</text>
-<rect x="38" y="160.25" width="242.47" height="195.77"/>
-<rect x="378.13" y="160.25" width="242.47" height="195.77"/>
-<rect x="718.27" y="160.25" width="242.47" height="195.77"/>
-<rect x="86.83" y="217.35" class="st3" width="136.39" height="78.31"/>
-<rect x="426.23" y="217.35" class="st3" width="136.39" height="78.31"/>
-<rect x="772.84" y="217.35" class="st3" width="136.39" height="78.31"/>
-<rect x="258.58" y="230.4" width="126.29" height="44.05"/>
-<rect x="591.98" y="230.4" width="146.49" height="44.05"/>
-<rect x="295.63" y="305.44" width="70.72" height="47.31"/>
-<ellipse cx="330.99" cy="302.18" rx="20.21" ry="9.79"/>
+<rect x="38" y="160.2" width="242.5" height="195.8"/>
+<rect x="378.1" y="160.2" width="242.5" height="195.8"/>
+<rect x="718.3" y="160.2" width="242.5" height="195.8"/>
+<rect x="64" y="190" class="st3" width="188" height="135.1"/>
+<rect x="258.6" y="240" width="126.3" height="21.5"/>
+<rect x="295.6" y="305.4" width="70.7" height="47.3"/>
+<ellipse cx="331" cy="302.2" rx="20.2" ry="9.8"/>
 <rect x="321.2" y="300" class="st3" width="17.8" height="6"/>
-<rect x="78.41" y="398.43" class="st0" width="907.59" height="81.57"/>
+<rect x="78.4" y="398.4" class="st0" width="907.6" height="81.6"/>
 <text transform="matrix(1.0322 0 0 1 78.4121 436.957)" class="st1 st4">An open guide to Amazon QLDB</text>
-<rect x="631.64" y="305.87" width="70.72" height="47.31"/>
-<ellipse cx="667" cy="302.61" rx="20.21" ry="9.79"/>
-<rect x="657.21" y="300.43" class="st3" width="17.8" height="6"/>
+<rect x="631.6" y="305.9" width="70.7" height="47.3"/>
+<ellipse cx="667" cy="302.6" rx="20.2" ry="9.8"/>
+<rect x="657.2" y="300.4" class="st3" width="17.8" height="6"/>
 <rect x="329" y="322" class="st3" width="4" height="15"/>
 <rect x="665" y="322" class="st3" width="4" height="15"/>
+<rect x="604.6" y="240" width="126.3" height="21.5"/>
+<rect x="407.2" y="190" class="st3" width="188" height="135.1"/>
+<rect x="746" y="190" class="st3" width="188" height="135.1"/>
 </svg>
