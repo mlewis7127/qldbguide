@@ -26,13 +26,22 @@ img[alt="logo"] {
 }
 
 .greySection {
-  background: #e6e8ec;
-  position: relative;
-  box-sizing: border-box;
-  border: none;
-  margin: 8px -25px 5px;
-  box-shadow: 0px 5px 5px grey;
-  padding: 50px;
+    background: #e6e8ec;
+    position: relative;
+    box-sizing: border-box;
+    border: none;
+    margin: 8px -25px 5px;
+    box-shadow: 0px 5px 5px grey;
+    padding: 50px;
+}
+
+.whiteSection {
+    background: #ffffff;
+    position: relative;
+    box-sizing: border-box;
+    border: none;
+    margin: 8px -25px 5px;
+    padding: 50px;
 }
 
 .darkerSection {
@@ -59,7 +68,7 @@ section {
 }
 
 .indexSectionContent {
-  max-width: 600px;
+  /*max-width: 600px;*/
   text-align: center;
 }
 
@@ -87,7 +96,7 @@ body.page-section .pt-4 {
 }
 
 .spacer {
-  height: 20px;
+  height: 40px;
   line-height: 1em;
   box-sizing: border-box;
   margin: 0 -25px;
