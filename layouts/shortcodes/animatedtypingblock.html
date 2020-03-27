@@ -7,7 +7,7 @@
 </div>
 <script>
   var typed = new Typed('#{{ $modifier }}', {
-    strings: ['CREATE TABLE Vehicle', 'INSERT INTO Vehicle << { "VIN" : "1N4AL11D75C109151", "LicensePlateNumber" : "LEWISR261LL" } >>','{{- .Inner -}}', 'DELETE FROM Vehicle WHERE VIN =\'1N4AL11D75C109151\''],
+    strings: ['CREATE TABLE Vehicle', 'INSERT INTO Vehicle { \'VIN\' : \'1N4AL11D75C109151\', \'LicensePlateNumber\' : \'LEWISR261LL\' }','{{- .Inner -}}', 'DELETE FROM Vehicle WHERE VIN =\'1N4AL11D75C109151\''],
     typeSpeed: 50,
     startDelay: 50,
     loop: true
