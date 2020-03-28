@@ -47,6 +47,7 @@ and verifiable history of changes over time
 <img src="/images/QLDB-overview.svg" />
 
 {{</ greysection >}}
+
 {{< whitesection >}}
 
 <h2>PartiQL - SQL Compatible interaction</h2>
@@ -74,20 +75,15 @@ as the history of all revisions to a record.
 </div>
 </div>
 {{</ darksection >}}
+
 {{< greysection >}}
-<div class="row">
-<div class="left">
-<img src="/images/hash-chaining.png" /> 
-</div>
-<div class="right">
-<div class="centerContainer">
 <h2>Cryptographically Verified</h2>
 As a transaction is committed, a SHA-256 hash is calculated and stored as part of the block. Each time a new block is 
 added, the hash for that block is combined with the hash of the previous block (hash chaining). QLDB also builds a
 continuously updating Merkle tree of journal blocks. Using the digest and a proof object for a given document revision,
 you can cryptographically verify the specific document is in the same location in the journal and has not been altered
 in any way.
-</div>
-</div>
-</div>
+
+<img src="/images/QLDB-Crypto.svg" /> 
+
 {{</ greysection >}}
