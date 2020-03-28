@@ -19,25 +19,7 @@ Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), whic
 {{< /column >}}
 {{< /block >}}
 {{< spacer >}}
-{{< darksection >}}
-{{< block "grid-3" >}}
-<div id="no2" class="code">
-<h4>Create a Ledger</h4>
-Create a new ledger with tables and indexes
-</div>
 
-<div id="no3" class="code">
-<h4>Insert and Update Data</h4>
-Insert a new document and update to create multiple document revisions
-</div>
-
-<div id="no4" class="code">
-<h4>Query data and Crytographically Verify</h4>
-Query the current state of a document or its historical states. Crytographically
-verify the change history of the data
-</div>
-{{< /block >}}
-{{</ darksection >}}
 {{< greysection >}}
 <h2>Amazon Quantum Ledger Database (QLDB)</h2>
 is a fully managed ledger database that provides a transparent, immutable, and cryptographically verifiable transaction log 
@@ -47,6 +29,7 @@ and verifiable history of changes over time
 <img src="/images/QLDB-overview.svg" />
 
 {{</ greysection >}}
+
 {{< whitesection >}}
 
 <h2>PartiQL - SQL Compatible interaction</h2>
@@ -59,12 +42,35 @@ SELECT v.VIN FROM Vehicle [ AS ] v
 {{</ animatedtypingblock >}}
 {{< spacer >}}
 {{</ whitesection >}}
+
+
+
+
 {{< darksection >}}
 <h2>Journal First Architecture</h2>
-QLDB adopts a journal first architecture. No record can be updated without going through the journal first. It contains 
-only committed transactions. These are then projected into materialised views that show both the current state, as well
-as the history of all revisions to a record.
+{{< spacer >}}
+{{< block "grid-3" >}}
+<div id="no2" class="code">
+<h4>Journal First</h4>
+No record can be updated without going through the journal first
+</div>
+
+<div id="no3" class="code">
+<h4>Committed Transactions</h4>
+The journal contains only committed transactions
+</div>
+
+<div id="no4" class="code">
+<h4>Materialized Views</h4>
+Committed transactions are projected into materialized views that show both the current state, as well as the history of all revisions to a record.
+</div>
+{{< /block >}}
+{{< spacer >}}
+<img src="/images/journal-first.png" /> 
+
 {{</ darksection >}}
+
+
 {{< greysection >}}
 <h2>Cryptographically Verified</h2>
 As a transaction is committed, a SHA-256 hash is calculated and stored as part of the block. Each time a new block is 
@@ -72,4 +78,7 @@ added, the hash for that block is combined with the hash of the previous block (
 continuously updating Merkle tree of journal blocks. Using the digest and a proof object for a given document revision,
 you can cryptographically verify the specific document is in the same location in the journal and has not been altered
 in any way.
+
+<img src="/images/QLDB-Crypto.svg" /> 
+
 {{</ greysection >}}
