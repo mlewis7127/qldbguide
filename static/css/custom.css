@@ -160,10 +160,12 @@ body.page-section .pt-4 {
     justify-content: center;
     align-items: center;
     padding-right: 50px;
+    text-align: left;
 }
 
 .right {
     flex: 50%;
+    text-align: right;
 }
 
 .row:after {
