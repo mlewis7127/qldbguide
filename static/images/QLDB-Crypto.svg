@@ -3,14 +3,16 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 981.2 446.5" style="enable-background:new 0 0 981.2 446.5;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
-	.st1{fill:none;}
-	.st2{font-family:'MyriadPro-Regular';}
-	.st3{font-size:14px;}
-	.st4{font-size:24px;}
-	.st5{stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
-	.st6{fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+	.st0{fill:#FFFFFF;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+	.st2{fill:none;}
+	.st3{font-family:'MyriadPro-Regular';}
+	.st4{font-size:14px;}
+	.st5{font-size:24px;}
+	.st6{stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+	.st7{fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
 </style>
+<rect x="27.3" y="8.9" class="st0" width="929.9" height="426.4"/>
 <g>
 	<path d="M230.7,393.4h-6.1v-3h6.1c1.7,0,3-1.4,3-3v-32h-12.2c-3.4,0-6.1-2.7-6.1-6.1v-10.7v-3h-27.4c-1.7,0-3,1.4-3,3H182
 		c0-3.4,2.7-6.1,6.1-6.1c0,0,11.7,0,22.8,0c0.3,0,0.5,0,0.8,0c0.5,0,1.1,0,1.6,0h4.3l18.8,20.2l-0.1,0.5l0.5,0.5v4.6v28.9
@@ -28,7 +30,7 @@
 	<circle cx="253.9" cy="372.1" r="2"/>
 	<path d="M254.4,372.1h-1l-1,6h3L254.4,372.1z"/>
 </g>
-<rect x="146.2" y="297.6" class="st0" width="136.2" height="114.3"/>
+<rect x="146.2" y="297.6" class="st1" width="136.2" height="114.3"/>
 <g>
 	<path d="M441.5,392.7h-6.1v-3h6.1c1.7,0,3-1.4,3-3v-32h-12.2c-3.4,0-6.1-2.7-6.1-6.1v-10.7v-3h-27.4c-1.7,0-3,1.4-3,3h-3.1
 		c0-3.4,2.7-6.1,6.1-6.1c0,0,11.7,0,22.8,0c0.3,0,0.5,0,0.8,0c0.5,0,1,0,1.6,0h4.3l18.8,20.2l-0.1,0.5l0.5,0.5v4.6v28.9
@@ -46,7 +48,7 @@
 	<circle cx="464.7" cy="371.4" r="2"/>
 	<path d="M465.2,371.4h-1l-1,6h3L465.2,371.4z"/>
 </g>
-<rect x="357" y="296.9" class="st0" width="136.2" height="114.3"/>
+<rect x="357" y="296.9" class="st1" width="136.2" height="114.3"/>
 <g>
 	<path d="M650.1,392.1H644v-3h6.1c1.7,0,3-1.4,3-3v-32H641c-3.4,0-6.1-2.7-6.1-6.1v-10.7v-3h-27.4c-1.7,0-3,1.4-3,3h-3
 		c0-3.4,2.7-6.1,6.1-6.1c0,0,11.7,0,22.8,0c0.3,0,0.5,0,0.8,0c0.5,0,1.1,0,1.6,0h4.3l18.8,20.2l-0.1,0.5l0.5,0.5v4.6V386
@@ -64,7 +66,7 @@
 	<circle cx="673.3" cy="370.7" r="2"/>
 	<path d="M673.8,370.7h-1l-1,6h3L673.8,370.7z"/>
 </g>
-<rect x="565.6" y="296.3" class="st0" width="136.2" height="114.3"/>
+<rect x="565.6" y="296.3" class="st1" width="136.2" height="114.3"/>
 <g>
 	<path d="M859.9,391.4h-6.1v-3h6.1c1.7,0,3-1.4,3-3v-32h-12.2c-3.4,0-6.1-2.7-6.1-6.1v-10.7v-3h-27.4c-1.7,0-3,1.4-3,3h-3
 		c0-3.4,2.7-6.1,6.1-6.1c0,0,11.7,0,22.8,0c0.3,0,0.5,0,0.8,0c0.5,0,1.1,0,1.6,0h4.3l18.8,20.2l-0.1,0.5l0.5,0.5v4.6v28.9
@@ -82,8 +84,8 @@
 	<circle cx="883.1" cy="370" r="2"/>
 	<path d="M883.6,370h-1l-1,6h3L883.6,370z"/>
 </g>
-<rect x="775.4" y="295.6" class="st0" width="136.2" height="114.3"/>
-<rect x="146.2" y="207.5" class="st0" width="136.3" height="43.1"/>
+<rect x="775.4" y="295.6" class="st1" width="136.2" height="114.3"/>
+<rect x="146.2" y="207.5" class="st1" width="136.3" height="43.1"/>
 <g>
 	<path d="M264.2,226.1h-2v-4c0-3.9-3.1-7-7-7s-7,3.1-7,7v4h-2v-4c0-5,4-9,9-9s9,4,9,9V226.1z"/>
 	<path d="M263.2,243.1h-16c-1.7,0-3-1.3-3-3v-12c0-1.7,1.3-3,3-3h16c1.7,0,3,1.3,3,3v12C266.2,241.8,264.9,243.1,263.2,243.1z
@@ -91,9 +93,9 @@
 	<circle cx="255.2" cy="231.1" r="2"/>
 	<path d="M255.7,231.1h-1l-1,6h3L255.7,231.1z"/>
 </g>
-<rect x="149.8" y="224.8" class="st1" width="93" height="16.5"/>
-<text transform="matrix(1 0 0 1 154.977 234.7758)" class="st2 st3">SHA-256 Hash</text>
-<rect x="358" y="207.5" class="st0" width="136.3" height="43.1"/>
+<rect x="149.8" y="224.8" class="st2" width="93" height="16.5"/>
+<text transform="matrix(1 0 0 1 154.977 234.7758)" class="st3 st4">SHA-256 Hash</text>
+<rect x="358" y="207.5" class="st1" width="136.3" height="43.1"/>
 <g>
 	<path d="M476,226.1h-2v-4c0-3.9-3.1-7-7-7s-7,3.1-7,7v4h-2v-4c0-5,4-9,9-9s9,4,9,9V226.1z"/>
 	<path d="M475,243.1h-16c-1.7,0-3-1.3-3-3v-12c0-1.7,1.3-3,3-3h16c1.7,0,3,1.3,3,3v12C478,241.8,476.7,243.1,475,243.1z M459,227.1
@@ -101,9 +103,9 @@
 	<circle cx="467" cy="231.1" r="2"/>
 	<path d="M467.5,231.1h-1l-1,6h3L467.5,231.1z"/>
 </g>
-<rect x="361.6" y="224.9" class="st1" width="93" height="16.5"/>
-<text transform="matrix(1 0 0 1 366.8303 234.8103)" class="st2 st3">SHA-256 Hash</text>
-<rect x="560.6" y="205.5" class="st0" width="136.3" height="43.1"/>
+<rect x="361.6" y="224.9" class="st2" width="93" height="16.5"/>
+<text transform="matrix(1 0 0 1 366.8303 234.8103)" class="st3 st4">SHA-256 Hash</text>
+<rect x="560.6" y="205.5" class="st1" width="136.3" height="43.1"/>
 <g>
 	<path d="M678.6,224.1h-2v-4c0-3.9-3.1-7-7-7c-3.9,0-7,3.1-7,7v4h-2v-4c0-5,4-9,9-9s9,4,9,9V224.1z"/>
 	<path d="M677.6,241.1h-16c-1.7,0-3-1.3-3-3v-12c0-1.7,1.3-3,3-3h16c1.7,0,3,1.3,3,3v12C680.6,239.8,679.3,241.1,677.6,241.1z
@@ -111,9 +113,9 @@
 	<circle cx="669.6" cy="229.1" r="2"/>
 	<path d="M670.1,229.1h-1l-1,6h3L670.1,229.1z"/>
 </g>
-<rect x="564.2" y="222.9" class="st1" width="93" height="16.5"/>
-<text transform="matrix(1 0 0 1 569.449 232.8103)" class="st2 st3">SHA-256 Hash</text>
-<rect x="772" y="204.5" class="st0" width="136.3" height="43.1"/>
+<rect x="564.2" y="222.9" class="st2" width="93" height="16.5"/>
+<text transform="matrix(1 0 0 1 569.449 232.8103)" class="st3 st4">SHA-256 Hash</text>
+<rect x="772" y="204.5" class="st1" width="136.3" height="43.1"/>
 <g>
 	<path d="M890,223.1h-2v-4c0-3.9-3.1-7-7-7c-3.9,0-7,3.1-7,7v4h-2v-4c0-5,4-9,9-9s9,4,9,9V223.1z"/>
 	<path d="M889,240.1h-16c-1.7,0-3-1.3-3-3v-12c0-1.7,1.3-3,3-3h16c1.7,0,3,1.3,3,3v12C892,238.8,890.7,240.1,889,240.1z M873,224.1
@@ -121,9 +123,9 @@
 	<circle cx="881" cy="228.1" r="2"/>
 	<path d="M881.5,228.1h-1l-1,6h3L881.5,228.1z"/>
 </g>
-<rect x="775.6" y="221.9" class="st1" width="93" height="16.5"/>
-<text transform="matrix(1 0 0 1 780.7934 231.8103)" class="st2 st3">SHA-256 Hash</text>
-<rect x="252" y="123.4" class="st0" width="136.3" height="43.1"/>
+<rect x="775.6" y="221.9" class="st2" width="93" height="16.5"/>
+<text transform="matrix(1 0 0 1 780.7934 231.8103)" class="st3 st4">SHA-256 Hash</text>
+<rect x="252" y="123.4" class="st1" width="136.3" height="43.1"/>
 <g>
 	<path d="M370,142h-2v-4c0-3.9-3.1-7-7-7s-7,3.1-7,7v4h-2v-4c0-5,4-9,9-9s9,4,9,9V142z"/>
 	<path d="M369,159h-16c-1.7,0-3-1.3-3-3v-12c0-1.7,1.3-3,3-3h16c1.7,0,3,1.3,3,3v12C372,157.7,370.7,159,369,159z M353,143
@@ -131,9 +133,9 @@
 	<circle cx="361" cy="147" r="2"/>
 	<path d="M361.5,147h-1l-1,6h3L361.5,147z"/>
 </g>
-<rect x="255.6" y="140.7" class="st1" width="93" height="16.5"/>
-<text transform="matrix(1 0 0 1 260.8303 150.6655)" class="st2 st3">SHA-256 Hash</text>
-<rect x="669.6" y="123.4" class="st0" width="136.3" height="43.1"/>
+<rect x="255.6" y="140.7" class="st2" width="93" height="16.5"/>
+<text transform="matrix(1 0 0 1 260.8303 150.6655)" class="st3 st4">SHA-256 Hash</text>
+<rect x="669.6" y="123.4" class="st1" width="136.3" height="43.1"/>
 <g>
 	<path d="M787.6,142h-2v-4c0-3.9-3.1-7-7-7c-3.9,0-7,3.1-7,7v4h-2v-4c0-5,4-9,9-9s9,4,9,9V142z"/>
 	<path d="M786.6,159h-16c-1.7,0-3-1.3-3-3v-12c0-1.7,1.3-3,3-3h16c1.7,0,3,1.3,3,3v12C789.6,157.7,788.3,159,786.6,159z M770.6,143
@@ -141,9 +143,9 @@
 	<circle cx="778.6" cy="147" r="2"/>
 	<path d="M779.1,147h-1l-1,6h3L779.1,147z"/>
 </g>
-<rect x="673.3" y="140.8" class="st1" width="93" height="16.5"/>
-<text transform="matrix(1 0 0 1 678.4525 150.7001)" class="st2 st3">SHA-256 Hash</text>
-<rect x="467" y="55.1" class="st0" width="136.3" height="43.1"/>
+<rect x="673.3" y="140.8" class="st2" width="93" height="16.5"/>
+<text transform="matrix(1 0 0 1 678.4525 150.7001)" class="st3 st4">SHA-256 Hash</text>
+<rect x="467" y="55.1" class="st1" width="136.3" height="43.1"/>
 <g>
 	<path d="M585,73.7h-2v-4c0-3.9-3.1-7-7-7c-3.9,0-7,3.1-7,7v4h-2v-4c0-5,4-9,9-9s9,4,9,9V73.7z"/>
 	<path d="M584,90.7h-16c-1.7,0-3-1.3-3-3v-12c0-1.7,1.3-3,3-3h16c1.7,0,3,1.3,3,3v12C587,89.4,585.7,90.7,584,90.7z M568,74.7
@@ -151,29 +153,29 @@
 	<circle cx="576" cy="78.7" r="2"/>
 	<path d="M576.5,78.7h-1l-1,6h3L576.5,78.7z"/>
 </g>
-<rect x="470.6" y="72.4" class="st1" width="93" height="16.5"/>
-<text transform="matrix(1 0 0 1 475.8339 82.3449)" class="st2 st3">SHA-256 Hash</text>
-<rect x="476.5" y="31.7" class="st1" width="112.3" height="27.7"/>
-<text transform="matrix(1 0 0 1 500.4204 48.737)" class="st2 st4">Digest</text>
-<rect x="282.5" y="349.9" class="st5" width="74.6" height="1.4"/>
-<rect x="493.3" y="348.2" class="st5" width="70.4" height="0.9"/>
-<polygon class="st5" points="775.4,347.9 701.9,347.9 701.9,347.9 775.4,347.9 "/>
-<line class="st6" x1="214.3" y1="205.5" x2="295.8" y2="166.5"/>
-<line class="st6" x1="622.7" y1="205.5" x2="732.2" y2="166.5"/>
-<line class="st6" x1="839.2" y1="204.5" x2="758.2" y2="166.5"/>
-<line class="st6" x1="316.7" y1="123.4" x2="467.6" y2="72.4"/>
-<line class="st6" x1="730.2" y1="123.4" x2="603.3" y2="73.7"/>
-<line class="st6" x1="425.2" y1="205.5" x2="334.6" y2="166.5"/>
-<rect x="13.7" y="343.5" class="st1" width="151.7" height="25.8"/>
-<text transform="matrix(1 0 0 1 52.6877 360.5889)" class="st2 st4">Journal</text>
-<rect x="16.5" y="118.8" class="st1" width="151.7" height="61"/>
-<text transform="matrix(1 0 0 1 58.301 135.8045)"><tspan x="0" y="0" class="st2 st4">Merkle</tspan><tspan x="12.1" y="28.8" class="st2 st4">Tree</tspan></text>
-<rect x="154.2" y="302.2" class="st1" width="112.3" height="27.7"/>
-<text transform="matrix(1 0 0 1 183.4042 319.2635)" class="st2 st4">Block</text>
-<rect x="366.6" y="301.2" class="st1" width="112.3" height="27.7"/>
-<text transform="matrix(1 0 0 1 395.8323 318.2635)" class="st2 st4">Block</text>
-<rect x="575.6" y="301.2" class="st1" width="112.3" height="27.7"/>
-<text transform="matrix(1 0 0 1 604.8157 318.2635)" class="st2 st4">Block</text>
-<rect x="784.4" y="299.2" class="st1" width="112.3" height="27.7"/>
-<text transform="matrix(1 0 0 1 813.6387 316.2635)" class="st2 st4">Block</text>
+<rect x="470.6" y="72.4" class="st2" width="93" height="16.5"/>
+<text transform="matrix(1 0 0 1 475.8339 82.3449)" class="st3 st4">SHA-256 Hash</text>
+<rect x="476.5" y="31.7" class="st2" width="112.3" height="27.7"/>
+<text transform="matrix(1 0 0 1 500.4204 48.737)" class="st3 st5">Digest</text>
+<rect x="282.5" y="349.9" class="st6" width="74.6" height="1.4"/>
+<rect x="493.3" y="348.2" class="st6" width="70.4" height="0.9"/>
+<polygon class="st6" points="775.4,347.9 701.9,347.9 701.9,347.9 775.4,347.9 "/>
+<line class="st7" x1="214.3" y1="205.5" x2="295.8" y2="166.5"/>
+<line class="st7" x1="622.7" y1="205.5" x2="732.2" y2="166.5"/>
+<line class="st7" x1="839.2" y1="204.5" x2="758.2" y2="166.5"/>
+<line class="st7" x1="316.7" y1="123.4" x2="467.6" y2="72.4"/>
+<line class="st7" x1="730.2" y1="123.4" x2="603.3" y2="73.7"/>
+<line class="st7" x1="425.2" y1="205.5" x2="334.6" y2="166.5"/>
+<rect x="13.7" y="343.5" class="st2" width="151.7" height="25.8"/>
+<text transform="matrix(1 0 0 1 52.6877 360.5889)" class="st3 st5">Journal</text>
+<rect x="16.5" y="118.8" class="st2" width="151.7" height="61"/>
+<text transform="matrix(1 0 0 1 58.301 135.8045)"><tspan x="0" y="0" class="st3 st5">Merkle</tspan><tspan x="12.1" y="28.8" class="st3 st5">Tree</tspan></text>
+<rect x="154.2" y="302.2" class="st2" width="112.3" height="27.7"/>
+<text transform="matrix(1 0 0 1 183.4042 319.2635)" class="st3 st5">Block</text>
+<rect x="366.6" y="301.2" class="st2" width="112.3" height="27.7"/>
+<text transform="matrix(1 0 0 1 395.8323 318.2635)" class="st3 st5">Block</text>
+<rect x="575.6" y="301.2" class="st2" width="112.3" height="27.7"/>
+<text transform="matrix(1 0 0 1 604.8157 318.2635)" class="st3 st5">Block</text>
+<rect x="784.4" y="299.2" class="st2" width="112.3" height="27.7"/>
+<text transform="matrix(1 0 0 1 813.6387 316.2635)" class="st3 st5">Block</text>
 </svg>
