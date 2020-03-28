@@ -60,10 +60,19 @@ SELECT v.VIN FROM Vehicle [ AS ] v
 {{< spacer >}}
 {{</ whitesection >}}
 {{< darksection >}}
+<div class="row">
+<div class="left">
+<div class="centerContainer">
 <h2>Journal First Architecture</h2>
 QLDB adopts a journal first architecture. No record can be updated without going through the journal first. It contains 
 only committed transactions. These are then projected into materialised views that show both the current state, as well
 as the history of all revisions to a record.
+</div>
+</div>
+<div class="right">
+<img src="/images/How-QLDB-Works.png" /> 
+</div>
+</div>
 {{</ darksection >}}
 {{< greysection >}}
 <h2>Cryptographically Verified</h2>

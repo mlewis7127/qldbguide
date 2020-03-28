@@ -150,3 +150,24 @@ body.page-section .pt-4 {
                 -o-transition:all 0.5s ease-out;
                     transition:all 0.5s ease-out;
 }
+
+.row {
+    display: flex;
+}
+.left {
+    flex: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 50px;
+}
+
+.right {
+    flex: 50%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
