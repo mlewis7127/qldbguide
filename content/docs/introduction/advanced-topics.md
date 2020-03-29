@@ -6,10 +6,12 @@ weight: 30
 draft: false
 ---
 
+# Advanced Topics
+
 ## Streaming
 
 At Reinvent 2019, AWS announcing the private preview of QLDB Streaming
 
-![Streaming Preview](/images/QLDB-streaming.png)
+![Streaming Preview](/images/QLDBStreaming.svg)
 
 
