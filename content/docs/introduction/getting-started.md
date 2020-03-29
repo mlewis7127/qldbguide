@@ -6,6 +6,8 @@ weight: 20
 draft: false
 ---
 
+# Getting Started
+
 The first step in using QLDB is to create a ledger. There are a number of options for this.
 
 ## Create Ledger
@@ -95,6 +97,7 @@ resources:
 {{< /codeblock  >}}
 
 
+{{< spacer >}}
 ## Create Tables
 
 Once you have a ledger, the next step is to create a table in the ledger. When you interact with QLDB, you use a SQL-compatible language called PartiQL. We have already covered the fact that QLDB uses a journal-first architecture, where no record can be updated without going through the journal first. Once committed to the journal, the changes are then projected into user created tables, which can be queried.
@@ -160,7 +163,7 @@ The `ServiceToken` is the ARN of the function that CloudFormation invokes when y
 
 The full working example can be found in [QLDB Simple Demo](https://github.com/mlewis7127/qldb-simple-demo) and has been tagged using v0.2
 
-
+{{< spacer >}}
 ## Insert, Query and Modify Data
 
 

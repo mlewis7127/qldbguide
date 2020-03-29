@@ -26,7 +26,7 @@ All of these important features are expanded on in [key concepts](../key-concept
 * **Central trusted authority** - QLDB is focused on use cases where there is a single owner of the ledger. This is where it differentiates from distributed ledger technologies that require multiple parties to agree a transaction is valid with no single owner.
 * **Familiarity** - QLDB supports [PartiQL](https://partiql.org/) which is a SQL-compatible open standard query language. QLDB supports [Amazon ION](http://amzn.github.io/ion-docs/) document data format. This is a superset of JSON that supports a rich type system.
 
-
+{{< spacer >}}
 ## Why use QLDB
 
 AWS provide a broad portfolio of purpose-built databases. This allows a developer to pick the right tool for the job, rather than using a one size fits all solution for everything. More details on the positioning of QLDB within this portfolio is provided in the section on [database freedom](../database-freedom/).
@@ -41,7 +41,7 @@ Solutions to these requirements have previously been carried out with traditiona
 
 QLDB itself originated from a need that AWS had internally for an immutable and searchable transaction log to track every single data plane change that traditional relational databases did not support well. Today, you cannot launch an EC2 instance, send a message on Kinesis, or scale an autoscaling group without using QLDB technology. It is this internal technology, used for many years within AWS, that forms the backbone of the QLDB product.
 
-
+{{< spacer >}}
 ## How QLDB works
 
 A basic overview of how QLDB works is shown in the diagram below:
