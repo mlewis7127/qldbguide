@@ -66,3 +66,10 @@ There are 3 different ways of querying data held in QLDB:
 At any point in time, the entire content of the journal can be exported for a variety of purposes such as analytics, auditing, verification, backup, and exporting to other systems. Within the export are data objects for every block in the journal. These contain transaction metadata along with entries that represent the document revisions that were committed in the transaction and the PartiQL statements that committed them.
 
 QLDB also builds a continuously-updated Merkle tree of the journal blocks. At any point in time, a digest can be requested, which represents the root of the Merkle tree. This uniquely represents the entire history of document revisions at this time. These digests can also be published wider, to allow third parties to carry out the same integrity proofs.
+
+
+{{< spacer >}}
+## Database Freedom
+
+![Database Freedom](/images/DatabaseFreedom.svg)
+
