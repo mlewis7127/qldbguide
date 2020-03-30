@@ -8,6 +8,39 @@ draft: false
 
 # Getting Started
 
+In order for you to be able to execute PartiQL statements in your language of choice, you will be required to add the
+language dependency to your preferred build tool. The most common examples are listed below:
+
+### Java
+
+#### Maven
+
+<script type="text/plain" class="language-markup">
+<dependency>
+    <groupId>software.amazon.qldb</groupId>
+    <artifactId>amazon-qldb-driver-java</artifactId>
+    <version>1.0.1</version>
+</dependency>
+</script>
+
+#### Gradle
+
+{{< codeblock "language-shell" >}}
+dependencies {
+    compile "software.amazon.qldb:amazon-qldb-driver-java:1.0.1"
+}
+{{< /codeblock  >}}
+
+### NodeJS
+
+{{< codeblock "language-json" >}}
+{
+  "dependencies": {
+    "amazon-qldb-driver-nodejs": "0.1.0-preview.2"
+   }
+}
+{{< /codeblock  >}}
+
 The first step in using QLDB is to create a ledger. There are a number of options for this.
 
 ## Create Ledger
@@ -165,5 +198,7 @@ The full working example can be found in [QLDB Simple Demo](https://github.com/m
 
 {{< spacer >}}
 ## Insert, Query and Modify Data
+
+
 
 
