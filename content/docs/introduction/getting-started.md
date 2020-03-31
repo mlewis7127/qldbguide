@@ -272,8 +272,6 @@ In the LedgerConnection it will also be worth adding a function to get the Amazo
 queries to verify documents which involve getting revisions. The following codeblock can be used to enable this:
 
 {{< codeblock  "language-java" >}}
-public static PooledQldbDriver pooledDriver = createPooledQldbDriver();
-
 /**
  * Method to create an amazon qldb client that can be used when
  * verifying documents and getting revisions.
