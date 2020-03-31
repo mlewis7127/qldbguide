@@ -291,5 +291,103 @@ public static AmazonQLDB createQLDBClient() {
 }
 {{< /codeblock >}}
 
+To create a QLDB Session it is useful to add a helper function that can be used later in the repository classes.
+
+{{< codeblock  "language-java" >}}
+public static QldbSession createQldbSession() {
+    return driver.getSession();
+}
+{{< /codeblock >}}
+
+### Repository Setup
+
+In the examples in this section we have used the Spring data JPA repository which provides the scaffolding for 
+Auto-wiring and method structure. 
+
+> Longer term we will look to add support to the Spring data repositories much like those familiar with Spring 
+> will have seen support for other common databases https://spring.io/projects/spring-data.
+
+To use the Spring or Spring boot support, the following can be added to the pom.xml file. Please note that Spring
+is not necessary or used within te Repository class itself and does not need to be used.
+
+{{< markupcodeblock >}}
+
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.8.RELEASE</version>
+    <relativePath />
+</parent>
+
+....
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+{{< /markupcodeblock >}}
+
+{{< markupcodeblock  "language-java" >}}
+public class BicycleLicenceQLDBRepository implements CrudRepository<BicycleLicence, String> {
+
+    // Used for Ion to Java Mapping
+    private IonValueMapper ION_MAPPER = new IonValueMapper(IonSystemBuilder.standard().build());
+    // Used for Java > Json Mapping
+    private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    
+    private PooledQldbDriver pooledQldbDriver;
+    private QldbSession qldbSession;
+    
+    {
+        pooledQldbDriver = LedgerConnextion.createPooledQldbDriver();
+        MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    }
+
+}
+{{< /markupcodeblock >}}
+
+If you wish to use the Spring Repository style implementation then it can be referenced using @Autowired or by injecting
+via the instantation through Constructors as follows:
+
+{{< codeblock  "language-java" >}}
+    // calling class
+    
+   .....
+   
+   private BicycleLicenceQldbRepository repository;
+   
+   public MyCallingClass(BicycleLicenceQldbRepository qldbRepository) {
+       this.repository = qldbRepository;
+   }
+{{< /codeblock >}}
+
+#### Inserting Documents
+
+The CrudRepository interface forces method signature implementations for the key Create, Retrive, Update and Delete 
+functions. The create method utilises the LedgerConnection pooled QLDB Driver to insert records in to the ledger.
+
+{{< markupcodeblock  "language-java" >}}
+@Override
+public <S extends BicycleLicence> S save(S s) {
+    qldbSession = LedgerConnection.createQldbSession();
+    qldbSession.execute(txn -> {
+        try {
+            final String query = String.format("INSERT INTO %s ?, "licence");
+            final IonValue document = (IonValue) ION_MAPPER.writeValueAsIonValue(s);
+            final List<IonValue> parameters = Collections.singletonList(document);
+            Result result = txn.execute(query, parameters);
+        }
+        catch (IOException ioe) {
+            throw new IllegalStateException(ioe);
+        }
+    });
+    return s;
+}
+{{< /markupcodeblock >}}
+
+##### Retrieving the QLDB Document Id
+
+It is possible that you can use the returning Result class to get hold of the generated Document Id, this will be
+demonstrated when we add query support to the QLDB Repository where the Result class is parsed to a List of IonStruct.
 
 
