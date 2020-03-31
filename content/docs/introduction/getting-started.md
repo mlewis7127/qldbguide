@@ -465,3 +465,32 @@ public static List<IonStruct> toIonStructs(final Result result) {
 }
 {{< /markupcodeblock >}}
 
+#### Updating Documents
+
+The following example demonstrates how to update a record using the unique email address to find a record. 
+(where business rules are applied within the application).
+
+At the time of writing the DTO cannot be automatically mapped using the entity mapping through Spring and requires the
+values to manually converted to Ion within the method as highlighted below.
+
+{{< markupcodeblock  "language-java" >}}
+@Override
+public <S extends BicycleLicence> S update(S s) {
+    qldbSession = LedgerConnection.createQldbSession();
+    qldbSession.execute(txn -> {
+        try {
+            final String query = String.format("UPDATE %s as l set l.name = ?, l.telephone = ? where l.email = ?, "licence");
+            final List<IonValue> parameters = new ArrayList<>();
+            parameters.add(ION_MAPPER.writeValueAsIonValue(s.getName()));
+            parameters.add(ION_MAPPER.writeValueAsIonValue(s.getTelephone()));
+            parameters.add(ION_MAPPER.writeValueAsIonValue(s.getEmail()));
+            
+            Result result = txn.execute(query, parameters);
+        }
+        catch (IOException ioe) {
+            throw new IllegalStateException(ioe);
+        }
+    });
+    return s;
+}
+{{< /markupcodeblock >}}
