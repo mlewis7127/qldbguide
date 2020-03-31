@@ -388,6 +388,6 @@ public <S extends BicycleLicence> S save(S s) {
 ##### Retrieving the QLDB Document Id
 
 It is possible that you can use the returning Result class to get hold of the generated Document Id, this will be
-demonstrated when we add query support to the QLDB Repository where the Result class is parted to a List<IonStruct>.
+demonstrated when we add query support to the QLDB Repository where the Result class is parsed to a List of IonStruct.
 
 
