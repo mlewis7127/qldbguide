@@ -390,4 +390,78 @@ public <S extends BicycleLicence> S save(S s) {
 It is possible that you can use the returning Result class to get hold of the generated Document Id, this will be
 demonstrated when we add query support to the QLDB Repository where the Result class is parsed to a List of IonStruct.
 
+Please note in this example it is possible to get a document based on email as it has to be unique in this demo
+
+If you wish to query for the document Id explicitly it is possible to do this as follows: 
+
+{{< markupcodeblock  "language-java" >}}
+@Override
+public IonValue getDocumentId(final String uniqueObjectRef) {
+    final String query = "select metadata.id as docId from _ql_committed_licence where data.email = ?";
+    qldbSession = LedgerConnection.createQldbSession();
+    IonValue documentId = qldbSession.execute(txn -> {
+        try {
+            final List<IonValue> parameters = Collections.singletonList(ION_MAPPER.writeValueAsIonValue(uniqueObjectRef));
+            final Result result = txn.execute(query, parameters);
+            
+            List<IonStruct> documentList = new ArrayList<>();
+            result.iterator().forEachRemaining(row - > {
+                docList.add((IonStruct)) row);
+            });
+            // in this example there is only one record expected in the list
+            // this is iterating rather than returning single to demonstrate
+            return docList.get(0).get("docId");
+        }
+        catch (IOException ioe) {
+            throw new IllegalStateException(ioe);
+        }
+    });
+    return documentId;
+}
+{{< /markupcodeblock >}}
+
+#### Querying Documents
+
+Querying documents in QLDB is very similar in process to that of creating documents. The key areas highlighted in the 
+example below demonstrate how to use the list of ION structs returned from the query execution to map back to Java using
+Jackson.
+
+{{< markupcodeblock  "language-java" >}}
+
+public BicycleLicence findByEmail(final String email) {
+    List<BicycleLicences> licences = new ArrayList<>();
+    qldbSession = LedgerConnection.createQldbSession();
+    final String query = String.format("SELECT * FROM %s where email = ?", "licence");
+    qldbSession.execute(txn -> {
+        List<IonValue> parameters = null;
+        try {
+            parameters = Collections.singletonList(ION_MAPPER.writeValueAsIonValue(email);
+            List<IonStruct> documents = toIonStructs(txn.execute(query, parameters));
+            for(IonStruct struct : documents) {
+                StringBuilder stringBuilder = new StringBuilder();
+                try (IonWriter jsonWriter = IonTextWriterBuilder.json().withPrettyPrinting().build(stringBuilder)) {
+                    rewrite(struct.toString(), jsonWriter);
+                }
+                BicycleLicence licence = OBJECT_MAPPER.readValue(stringBuilder.toString(), BicycleLicence.class);
+                licences.add(licence);
+            }
+        }
+        catch(IOException ioe) {
+            throw new IllegalStateException(ioe);
+        }
+    });
+    ....
+    // return object from list  
+    
+public void rewrite(String textIon, IonWriter writer) throws IOException {
+    IonReader reader = IonReaderBuilder.standard().build(textIon);
+    writer.writeValues(reader);
+}
+
+public static List<IonStruct> toIonStructs(final Result result) {
+    final List<IonStruct> documentList = new ArrayList<>();
+    result.iterator().forEachRemaining(row -> documentList.add((IonStruct) row);
+    return documentList;
+}
+{{< /markupcodeblock >}}
 
