@@ -15,13 +15,13 @@ language dependency to your preferred build tool. The most common examples are l
 
 #### Maven
 
-<script type="text/plain" class="language-markup">
+{{< markupcodeblock  >}}
 <dependency>
     <groupId>software.amazon.qldb</groupId>
     <artifactId>amazon-qldb-driver-java</artifactId>
     <version>1.0.1</version>
 </dependency>
-</script>
+{{< /markupcodeblock  >}}
 
 #### Gradle
 
@@ -197,8 +197,99 @@ The `ServiceToken` is the ARN of the function that CloudFormation invokes when y
 The full working example can be found in [QLDB Simple Demo](https://github.com/mlewis7127/qldb-simple-demo) and has been tagged using v0.2
 
 {{< spacer >}}
+
 ## Insert, Query and Modify Data
 
+In order to prepare an application to use QLDB the following elements should be added to your build tool. In this 
+example we have used Maven:
+
+{{< markupcodeblock  >}}
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>bom</artifactId>
+            <version>2.0.0</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+{{< /markupcodeblock  >}}
+
+So that it is possible to map between entities and the Ion dataformat, Jackson Object Mapper now supports converting 
+between Ion and Java DTO's or JSON.
+
+To add this dependency, please add the following to your pom.file:
+
+{{< markupcodeblock  >}}
+<dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-ion</artifactId>
+    <version>2.10.3</version>
+</dependency>
+{{< /markupcodeblock  >}}
+
+> Please note: in some of the associated demo applications the following library is also added as a dependency
+> <dependency>
+>     <groupId>com.amazonaws</groupId>
+>     <artifactId>aws-java-sdk-qldb</artifactId>
+>     <version>1.11.693</version>
+> </dependency>
+> This is due to the Jackson Mapper using older versions of the classes and means it is not possible to map between
+> some of the types under the new package structure.
+
+#### QLDB Ledger Connection Class
+
+To be able to initialise PartiQL statements with the QLDB Driver, as per the AWS examples, a Ledger Connection class
+is created:
+
+{{< codeblock  "language-java" >}}
+public static PooledQldbDriver pooledDriver = createPooledQldbDriver();
+
+/**
+ * Method to create a pooled qldb driver for creating sessions
+ *
+ * @return pooled qldb driver
+ */
+public static PooledQldbDriver createPooledQldbDriver() {
+    AmazonQLDBSessionClientBuilder builder = AmazonQLDBSessionClientBuilder.standard();
+    builder.setRegion(LedgerConstants.REGION);
+    if(null != endpoint) {
+        builder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region));
+    }
+    if(null != credentialsProvider) {
+        builder.setCredentials(credentialsProvider);
+    }
+    return PooledQldbDriver.builder()
+        .withLedger(LedgerConstants.LEDGER_NAME)
+        .withSessionClientBuilder(builder)
+        .build();
+}
+{{< /codeblock >}}
+
+In the LedgerConnection it will also be worth adding a function to get the AmazonQLDB Client if you intend on running
+queries to verify documents which involve getting revisions. The following codeblock can be used to enable this:
+
+{{< codeblock  "language-java" >}}
+/**
+ * Method to create an amazon qldb client that can be used when
+ * verifying documents and getting revisions.
+ *
+ * @return amazon qldb client
+ */
+public static AmazonQLDB createQLDBClient() {
+    AmazonQLDBClientBuilder builder = AmazonQLDBClientBuilder.standard();
+    builder.setRegion(LedgerConstants.REGION);
+    if(null != endpoint) {
+        builder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region));
+    }
+    if(null != credentialsProvider) {
+        builder.setCredentials(credentialsProvider);
+    }
+    return builder.build();
+}
+{{< /codeblock >}}
 
 
 
