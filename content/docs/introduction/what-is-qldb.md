@@ -17,7 +17,7 @@ Amazon Quantum Ledger Database [(QLDB)](https://aws.amazon.com/qldb/) is:
 > every application data change and maintains a complete and verifiable history of changes
 > over time
 
-All of these important features are expanded on in [key concepts](../key-concepts/), but as a quick summary:
+These important features are summarised as follows:
 
 * **Fully Managed** - QLDB is a fully serverless offering that automatically scales to meet demand
 * **Ledger Database** - QLDB is a new class of database built around a centralised ledger
@@ -27,17 +27,11 @@ All of these important features are expanded on in [key concepts](../key-concept
 * **Familiarity** - QLDB supports [PartiQL](https://partiql.org/) which is a SQL-compatible open standard query language. QLDB supports [Amazon ION](http://amzn.github.io/ion-docs/) document data format. This is a superset of JSON that supports a rich type system.
 
 {{< spacer >}}
-## Why use QLDB
-
-AWS provide a broad portfolio of purpose-built databases. This allows a developer to pick the right tool for the job, rather than using a one size fits all solution for everything. More details on the positioning of QLDB within this portfolio is provided in the section on [database freedom](#database-freedom).
+## What is a Ledger
 
 The concept of a ledger goes back centuries with the first book on double-entry accounting published in 1494. With this method, transactions are first recorded in the journal in chronological order, which is known as the book of primary entry. They are then transferred into the appropriate account or ledger, which is known as the book of second entry. This creates a complete audit trail of every single change.
 
-QLDB creates an audit trail of every change that can be easily queried, with the committed data being immutable and with the ability for the records to be cryptographically verified. This is becoming ever more important in a digital world, with a focus on interparty trust in a supply chain and regulatory and security compliance.
-
-A classic example is from the UK, with the abolition of the paper tax disc in 2014. Up to this point, a physical token had to be displayed in the windscreen of a vehicle, to prove it had been taxed to be driven on public roads. The requirement to tax the vehicle did not go away. Instead, all enforcement activity is carried out against the electronic record. This means that systems not only have to be accurate, but need the ability to go back and track all changes to a record, when the change was made, and why it was carried out. In addition, there is a need to verify that this data has not been altered in any way after the event.
-
-Solutions to these requirements have previously been carried out with traditional database technologies. However, this requires significant engineering effort to create custom audit trails, which is complex, time-consuming and error prone. This gap is now filled with the release of QLDB to support any solution that requires interparty trust or meet compliance requirements. QLDB is a good fit for any event sourced application, and can be considered an ideal Domain Driven Design aggregate store.
+QLDB creates an audit trail of every change that can be easily queried, with the committed data being immutable and with the ability for the records to be cryptographically verified. This is becoming ever more important in a digital world, with a focus on trust and regulatory and security compliance. 
 
 QLDB itself originated from a need that AWS had internally for an immutable and searchable transaction log to track every single data plane change that traditional relational databases did not support well. Today, you cannot launch an EC2 instance, send a message on Kinesis, or scale an autoscaling group without using QLDB technology. It is this internal technology, used for many years within AWS, that forms the backbone of the QLDB product.
 
@@ -69,21 +63,3 @@ QLDB also builds a continuously-updated Merkle tree of the journal blocks. At an
 
 
 {{< spacer >}}
-## Database Freedom
-
-Werner Vogels wrote a blog post that ['a one size fits all database doesn't fit anyone'](https://www.allthingsdistributed.com/2018/06/purpose-built-databases-in-aws.html). One of the reasons AWS built DynamoDB was that the traditional relational database being used for Amazon.com couldn't meet the required availability, scalability or performance needs. They found that 70% of operations were key-value lookups, which used a primary key and returned a single row. This type of access pattern was better suited to a different type of database.
-
-Today, QLDB forms part of a family of purpose-built databases offered by AWS:
-
-![Database Freedom](/images/DatabaseFreedom.svg)
-
-In his book 'Designing Data-Intensive Applications', Martin Kleppman noted many forces driving the adoption of a new breed of databases, including:
-
-* A need for greater scalability than relational databases can easily achieve, including very large datasets or very high write throughput
-* A widespread preference for free and open source software over commercial database products
-* Specialized query operations that are not well supported by the relational model
-* Frustration with the restrictiveness of relational schemas, and a desire for a more dynamic and expressive data model
-
-All of this means that the best choice of technology for one use, may well be different from the best choice for another. 
-
-QLDB is firmly positioned to support systems of record, which can benefit from the immutability and completeness of the record, and the cryptographic verification that can be applied. It's new streaming feature enables changes to the data captured in the journal to be streamed out, which can be linked in to other purpose built databases to get the best of all worlds.
