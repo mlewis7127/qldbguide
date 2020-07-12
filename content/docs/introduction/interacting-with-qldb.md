@@ -39,294 +39,76 @@ The first step in writing code to interact with QLDB is to create an instance of
 {{< codeblock "language-javascript" >}}
 {
 const { QldbDriver } = require('amazon-qldb-driver-nodejs');
+const qldbDriver = new QldbDriver(`LedgerName`);
 
-function createQldbDriver(
-  ledgerName = process.env.LEDGER_NAME,
-  serviceConfigurationOptions = {}
-) {
-  const qldbDriver = new QldbDriver(ledgerName, serviceConfigurationOptions);
+function getQldbDriver(){
   return qldbDriver;
-}
-
+};
 {{< /codeblock  >}}
 
+The constructor for a new `QldbDriver` can take five parameters, although only the first one is mandatory:
+
+* *ledgerName* - the name of the ledger to connect to
+* *qldbClientOptions* - an object that contains options for configuring the low level client. More details can be found [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/QLDBSession.html#constructor-details).
+* *retryLimit* - the number of times the driver will retry a transaction which failed (default 4 times)
+* *poolLimit* - the number of sessions the driver can hold in the pool, with the default set to the maximum number of sockets specified in the global agent
+* *timeoutMillis* - the time the driver will waot for a session to be available before giving up (default 30 secs)
+
+{{< spacer >}}
 
 ## Execute Lambda
 
-## Transaction Control
+The `executeLambda` method on the `QldbDriver` is the primary method to execute a transaction against a QLDB ledger. When this method is invoked, the driver acquires a `Transaction` and hands it to the `TransactionExecutor` that is passed in. Once all execution is complete, the driver attempts to commit the transaction. If there is a failure, then the driver will attempt to retry the entire transaction block, so your code should be idempotent.
 
-## CRUD Operations
+{{< codeblock "language-javascript" >}}
+await qldbDriver.executeLambda(async txn => {
+    const result = await txn.execute('SELECT * FROM Table')
+    const values = result.getResultList()
+    console.log(JSON.stringify(values, null, 2))
+})
+{{< /codeblock  >}}
 
-
-
-
-
+> **Note** In the example above, if multiple statements are executed, they will all either succeed or be rolled back in one atomic transaction
 
 {{< spacer >}}
 
 
-In order to prepare an application to use QLDB the following elements should be added to your build tool. In this 
-example we have used Maven:
+## CRUD Operations
 
-{{< markupcodeblock  >}}
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>bom</artifactId>
-            <version>2.0.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-{{< /markupcodeblock  >}}
+#### Creating a record
 
-So that it is possible to map between entities and the Ion dataformat, Jackson Object Mapper now supports converting 
-between Ion and Java DTO's or JSON.
+To create a new record, simply insert a document into a table:
 
-To add this dependency, please add the following to your pom.file:
+{{< codeblock "language-javascript" >}}
+await qldbDriver.executeLambda(async txn => {
+    const document = [{'Name': 'name', 'Email': 'name@email.com', 'Telephone': '01234'}];
+    const statement = 'INSERT INTO Table ?';
+    const result = await txn.execute(statement, document);
+    const values = result.getResultList()
+    console.log(JSON.stringify(values, null, 2))
+})
+{{< /codeblock  >}}
 
-{{< markupcodeblock  >}}
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-ion</artifactId>
-    <version>2.10.3</version>
-</dependency>
-{{< /markupcodeblock  >}}
+The `execute` method returns a Promise that resolves to a `Result` object. This class represents the fully buffered set of results from QLDB in an array. When a new record is inserted, the result object contains the document ID of the record.
 
-> Please note: in some of the associated demo applications the following library is also added as a dependency
-> <dependency>
->     <groupId>com.amazonaws</groupId>
->     <artifactId>aws-java-sdk-qldb</artifactId>
->     <version>1.11.693</version>
-> </dependency>
-> This is due to the Jackson Mapper using older versions of the classes and means it is not possible to map between
-> some of the types under the new package structure.
+{{< codeblock "language-json" >}}
+[
+  {
+    "documentId": "7ISClqWTgkcLNnBlgdtKYa"
+  }
+]
+{{< /codeblock  >}}
 
-#### QLDB Ledger Connection Class
+{{< spacer >}}
 
-To be able to initialise PartiQL statements with the QLDB Driver, as per the AWS examples, a Ledger Connection class
-is created:
+#### Reading a record
 
-{{< codeblock  "language-java" >}}
-public static PooledQldbDriver pooledDriver = createPooledQldbDriver();
+{{< spacer >}}
 
-/**
- * Method to create a pooled qldb driver for creating sessions
- *
- * @return pooled qldb driver
- */
-public static PooledQldbDriver createPooledQldbDriver() {
-    AmazonQLDBSessionClientBuilder builder = AmazonQLDBSessionClientBuilder.standard();
-    builder.setRegion(LedgerConstants.REGION);
-    if(null != endpoint) {
-        builder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region));
-    }
-    if(null != credentialsProvider) {
-        builder.setCredentials(credentialsProvider);
-    }
-    return PooledQldbDriver.builder()
-        .withLedger(LedgerConstants.LEDGER_NAME)
-        .withSessionClientBuilder(builder)
-        .build();
-}
-{{< /codeblock >}}
+#### Updating a record
 
-In the LedgerConnection it will also be worth adding a function to get the AmazonQLDB Client if you intend on running
-queries to verify documents which involve getting revisions. The following codeblock can be used to enable this:
+{{< spacer >}}
 
-{{< codeblock  "language-java" >}}
-/**
- * Method to create an amazon qldb client that can be used when
- * verifying documents and getting revisions.
- *
- * @return amazon qldb client
- */
-public static AmazonQLDB createQLDBClient() {
-    AmazonQLDBClientBuilder builder = AmazonQLDBClientBuilder.standard();
-    builder.setRegion(LedgerConstants.REGION);
-    if(null != endpoint) {
-        builder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region));
-    }
-    if(null != credentialsProvider) {
-        builder.setCredentials(credentialsProvider);
-    }
-    return builder.build();
-}
-{{< /codeblock >}}
+#### Deleting a record
 
-To create a QLDB Session it is useful to add a helper function that can be used later in the repository classes.
-
-{{< codeblock  "language-java" >}}
-public static QldbSession createQldbSession() {
-    return driver.getSession();
-}
-{{< /codeblock >}}
-
-### Repository Setup
-
-In the examples in this section we have used the Spring data JPA repository which provides the scaffolding for 
-Auto-wiring and method structure. 
-
-> Longer term we will look to add support to the Spring data repositories much like those familiar with Spring 
-> will have seen support for other common databases https://spring.io/projects/spring-data.
-
-To use the Spring or Spring boot support, the following can be added to the pom.xml file. Please note that Spring
-is not necessary or used within te Repository class itself and does not need to be used.
-
-{{< markupcodeblock >}}
-
-<parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.8.RELEASE</version>
-    <relativePath />
-</parent>
-
-....
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-</dependency>
-{{< /markupcodeblock >}}
-
-{{< markupcodeblock  "language-java" >}}
-public class BicycleLicenceQLDBRepository implements CrudRepository<BicycleLicence, String> {
-
-    // Used for Ion to Java Mapping
-    private IonValueMapper ION_MAPPER = new IonValueMapper(IonSystemBuilder.standard().build());
-    // Used for Java > Json Mapping
-    private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    
-    private PooledQldbDriver pooledQldbDriver;
-    private QldbSession qldbSession;
-    
-    {
-        pooledQldbDriver = LedgerConnextion.createPooledQldbDriver();
-        MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    }
-
-}
-{{< /markupcodeblock >}}
-
-If you wish to use the Spring Repository style implementation then it can be referenced using @Autowired or by injecting
-via the instantation through Constructors as follows:
-
-{{< codeblock  "language-java" >}}
-    // calling class
-    
-   .....
-   
-   private BicycleLicenceQldbRepository repository;
-   
-   public MyCallingClass(BicycleLicenceQldbRepository qldbRepository) {
-       this.repository = qldbRepository;
-   }
-{{< /codeblock >}}
-
-#### Inserting Documents
-
-The CrudRepository interface forces method signature implementations for the key Create, Retrive, Update and Delete 
-functions. The create method utilises the LedgerConnection pooled QLDB Driver to insert records in to the ledger.
-
-{{< markupcodeblock  "language-java" >}}
-@Override
-public <S extends BicycleLicence> S save(S s) {
-    qldbSession = LedgerConnection.createQldbSession();
-    qldbSession.execute(txn -> {
-        try {
-            final String query = String.format("INSERT INTO %s ?, "licence");
-            final IonValue document = (IonValue) ION_MAPPER.writeValueAsIonValue(s);
-            final List<IonValue> parameters = Collections.singletonList(document);
-            Result result = txn.execute(query, parameters);
-        }
-        catch (IOException ioe) {
-            throw new IllegalStateException(ioe);
-        }
-    });
-    return s;
-}
-{{< /markupcodeblock >}}
-
-##### Retrieving the QLDB Document Id
-
-It is possible that you can use the returning Result class to get hold of the generated Document Id, this will be
-demonstrated when we add query support to the QLDB Repository where the Result class is parsed to a List of IonStruct.
-
-Please note in this example it is possible to get a document based on email as it has to be unique in this demo
-
-If you wish to query for the document Id explicitly it is possible to do this as follows: 
-
-{{< markupcodeblock  "language-java" >}}
-@Override
-public IonValue getDocumentId(final String uniqueObjectRef) {
-    final String query = "select metadata.id as docId from _ql_committed_licence where data.email = ?";
-    qldbSession = LedgerConnection.createQldbSession();
-    IonValue documentId = qldbSession.execute(txn -> {
-        try {
-            final List<IonValue> parameters = Collections.singletonList(ION_MAPPER.writeValueAsIonValue(uniqueObjectRef));
-            final Result result = txn.execute(query, parameters);
-            
-            List<IonStruct> documentList = new ArrayList<>();
-            result.iterator().forEachRemaining(row - > {
-                docList.add((IonStruct)) row);
-            });
-            // in this example there is only one record expected in the list
-            // this is iterating rather than returning single to demonstrate
-            return docList.get(0).get("docId");
-        }
-        catch (IOException ioe) {
-            throw new IllegalStateException(ioe);
-        }
-    });
-    return documentId;
-}
-{{< /markupcodeblock >}}
-
-#### Querying Documents
-
-Querying documents in QLDB is very similar in process to that of creating documents. The key areas highlighted in the 
-example below demonstrate how to use the list of ION structs returned from the query execution to map back to Java using
-Jackson.
-
-{{< markupcodeblock  "language-java" >}}
-
-public BicycleLicence findByEmail(final String email) {
-    List<BicycleLicences> licences = new ArrayList<>();
-    qldbSession = LedgerConnection.createQldbSession();
-    final String query = String.format("SELECT * FROM %s where email = ?", "licence");
-    qldbSession.execute(txn -> {
-        List<IonValue> parameters = null;
-        try {
-            parameters = Collections.singletonList(ION_MAPPER.writeValueAsIonValue(email);
-            List<IonStruct> documents = toIonStructs(txn.execute(query, parameters));
-            for(IonStruct struct : documents) {
-                StringBuilder stringBuilder = new StringBuilder();
-                try (IonWriter jsonWriter = IonTextWriterBuilder.json().withPrettyPrinting().build(stringBuilder)) {
-                    rewrite(struct.toString(), jsonWriter);
-                }
-                BicycleLicence licence = OBJECT_MAPPER.readValue(stringBuilder.toString(), BicycleLicence.class);
-                licences.add(licence);
-            }
-        }
-        catch(IOException ioe) {
-            throw new IllegalStateException(ioe);
-        }
-    });
-    ....
-    // return object from list  
-    
-public void rewrite(String textIon, IonWriter writer) throws IOException {
-    IonReader reader = IonReaderBuilder.standard().build(textIon);
-    writer.writeValues(reader);
-}
-
-public static List<IonStruct> toIonStructs(final Result result) {
-    final List<IonStruct> documentList = new ArrayList<>();
-    result.iterator().forEachRemaining(row -> documentList.add((IonStruct) row);
-    return documentList;
-}
-{{< /markupcodeblock >}}
-
+{{< spacer >}}
