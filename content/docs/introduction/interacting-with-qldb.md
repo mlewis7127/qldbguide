@@ -1,0 +1,114 @@
+---
+title: "Interacting with QLDB"
+date: 2020-02-21T18:32:44Z
+lastmod: 2020-07-11
+weight: 25
+draft: false
+---
+
+# Interacting with QLDB
+
+> **Note** QLDB currently provides supported drivers for Java, Python and Nodejs. All examples in this guide use Nodejs
+
+## Environment Setup
+
+A typical setup of dependencies required to interact with QLDB is shown below:
+
+{{< codeblock "language-json" >}}
+{
+ "dependencies": {
+    "amazon-qldb-driver-nodejs": "^1.0.0",
+    "aws-sdk": "^2.706.0",
+    "aws-xray-sdk-core": "^3.1.0",
+    "ion-js": "^4.0.1",
+    "jsbi": "^3.1.3"
+  },
+}
+{{< /codeblock  >}}
+
+* The `amazon-qldb-driver-nodejs` module is the official driver provided by AWS
+* The `aws-sdk` and `aws-xray-sdk-core` modules are needed to support tracing with X-Ray
+* The `ion-js` and `jsbi` modules are needed to easily interact with Amazon ION documents
+
+{{< spacer >}}
+
+## Connect to Ledger
+
+The first step in writing code to interact with QLDB is to create an instance of `QldbDriver`. This can be done as shown below, passing in the name of the Ledger to connect.
+
+{{< codeblock "language-javascript" >}}
+{
+const { QldbDriver } = require('amazon-qldb-driver-nodejs');
+const qldbDriver = new QldbDriver(`LedgerName`);
+
+function getQldbDriver(){
+  return qldbDriver;
+};
+{{< /codeblock  >}}
+
+The constructor for a new `QldbDriver` can take five parameters, although only the first one is mandatory:
+
+* *ledgerName* - the name of the ledger to connect to
+* *qldbClientOptions* - an object that contains options for configuring the low level client. More details can be found [here](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/QLDBSession.html#constructor-details).
+* *retryLimit* - the number of times the driver will retry a transaction which failed (default 4 times)
+* *poolLimit* - the number of sessions the driver can hold in the pool, with the default set to the maximum number of sockets specified in the global agent
+* *timeoutMillis* - the time the driver will waot for a session to be available before giving up (default 30 secs)
+
+{{< spacer >}}
+
+## Execute Lambda
+
+The `executeLambda` method on the `QldbDriver` is the primary method to execute a transaction against a QLDB ledger. When this method is invoked, the driver acquires a `Transaction` and hands it to the `TransactionExecutor` that is passed in. Once all execution is complete, the driver attempts to commit the transaction. If there is a failure, then the driver will attempt to retry the entire transaction block, so your code should be idempotent.
+
+{{< codeblock "language-javascript" >}}
+await qldbDriver.executeLambda(async txn => {
+    const result = await txn.execute('SELECT * FROM Table')
+    const values = result.getResultList()
+    console.log(JSON.stringify(values, null, 2))
+})
+{{< /codeblock  >}}
+
+> **Note** In the example above, if multiple statements are executed, they will all either succeed or be rolled back in one atomic transaction
+
+{{< spacer >}}
+
+
+## CRUD Operations
+
+#### Creating a record
+
+To create a new record, simply insert a document into a table:
+
+{{< codeblock "language-javascript" >}}
+await qldbDriver.executeLambda(async txn => {
+    const document = [{'Name': 'name', 'Email': 'name@email.com', 'Telephone': '01234'}];
+    const statement = 'INSERT INTO Table ?';
+    const result = await txn.execute(statement, document);
+    const values = result.getResultList()
+    console.log(JSON.stringify(values, null, 2))
+})
+{{< /codeblock  >}}
+
+The `execute` method returns a Promise that resolves to a `Result` object. This class represents the fully buffered set of results from QLDB in an array. When a new record is inserted, the result object contains the document ID of the record.
+
+{{< codeblock "language-json" >}}
+[
+  {
+    "documentId": "7ISClqWTgkcLNnBlgdtKYa"
+  }
+]
+{{< /codeblock  >}}
+
+{{< spacer >}}
+
+#### Reading a record
+
+{{< spacer >}}
+
+#### Updating a record
+
+{{< spacer >}}
+
+#### Deleting a record
+
+{{< spacer >}}

@@ -8,42 +8,9 @@ draft: false
 
 # Getting Started
 
-In order for you to be able to execute PartiQL statements in your language of choice, you will be required to add the
-language dependency to your preferred build tool. The most common examples are listed below:
-
-### Java
-
-#### Maven
-
-{{< markupcodeblock  >}}
-<dependency>
-    <groupId>software.amazon.qldb</groupId>
-    <artifactId>amazon-qldb-driver-java</artifactId>
-    <version>1.0.1</version>
-</dependency>
-{{< /markupcodeblock  >}}
-
-#### Gradle
-
-{{< codeblock "language-shell" >}}
-dependencies {
-    compile "software.amazon.qldb:amazon-qldb-driver-java:1.0.1"
-}
-{{< /codeblock  >}}
-
-### NodeJS
-
-{{< codeblock "language-json" >}}
-{
-  "dependencies": {
-    "amazon-qldb-driver-nodejs": "0.1.0-preview.2"
-   }
-}
-{{< /codeblock  >}}
-
-The first step in using QLDB is to create a ledger. There are a number of options for this.
-
 ## Create Ledger
+
+The first step is to create a ledger. There are a number of ways to do this from the AWS Console, AWS CLI and CloudFormation.
 
 **Create ledger via AWS Console**
 
@@ -54,7 +21,7 @@ The easiest way to get started is by creating a ledger through the AWS Console. 
 
 **Create ledger via AWS CLI**
 
-You can also create a ledger directly via the AWS Command Line Interface (CLI), using the createLedger call. With this, you must specify a ledger name and a permissions mode. The only permissions mode currently supported is ALLOW_ALL
+You can also create a ledger directly via the AWS Command Line Interface (CLI), using the createLedger call. With this, you must specify a ledger name and a permissions mode. The only permissions mode currently supported is `ALLOW_ALL`
 
 {{< codeblock "language-shell" >}}
 aws qldb create-ledger --name qldb-guide --permissions-mode ALLOW_ALL
@@ -69,97 +36,76 @@ Optionally, you can also specify tags to attach to your ledger.
 
 You can create a ledger using CloudFormation. The example file below uses the same details as the CLI example above.
 
-{{< codeblock "language-json" >}}
-create-ledger-cf.json
-{
-  "AWSTemplateFormatVersion" : "2010-09-09",
-  "Resources" : {
-    "myQLDBLedger": {
-      "Type": "AWS::QLDB::Ledger",
-      "Properties": {
-        "DeletionProtection": true,
-        "Name": "<ledger-name>",
-        "PermissionsMode": "ALLOW_ALL",
-        "Tags": [
-          {
-            "Key": "name",
-            "Value": "qldb-guide"
-          }
-        ]
-      }
-    }
-  }
-}
+{{< codeblock "language-yml" >}}
+create-ledger-cf.yml
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+    qldbGuideLedger:
+        Type: AWS::QLDB::Ledger
+        Properties:
+          Name: qldb-guide
+          DeletionProtection: false
+          PermissionsMode: ALLOW_ALL
+          Tags:
+            - 
+              Key: name
+              Value: qldb-guide
 {{< /codeblock >}}
 
 To deploy the template, run the following from a terminal window in the same directory:
 
 {{< codeblock "language-shell" >}}
-aws cloudformation deploy --template-file ./create-ledger-cf.json --stack-name qldb-demo 
-{{< /codeblock  >}}
-
-**Create ledger via Serverless Framework**
-
-QLDB is a fully serverless database, and it is likely that many people will use AWS Lambda to integrate with it. Many frameworks exist for building serverless applications such as AWS SAM and the Serverless Framework.
-
-Serverless Framework allows you to use CloudFormation in a `resources` section. The example below will create a QLDB ledger using the same parameters as the other examples.
-
-{{< codeblock  "language-yaml" >}}
-service: qldbguidedemo
-
-provider:
-  name: aws
-  runtime: nodejs10.x
-  stage: dev
-  region: eu-west-1
-
-...
-
-resources:
-  Resources:
-    qldbGuideLedger:
-      Type: AWS::QLDB::Ledger
-      Properties:
-        Name: <ledger-name>
-        DeletionProtection: false
-        PermissionsMode: ALLOW_ALL
-        Tags:
-          - 
-            Key: name
-            Value: qldb-guide
+aws cloudformation deploy --template-file ./create-ledger-cf.yml --stack-name qldb-demo 
 {{< /codeblock  >}}
 
 
 {{< spacer >}}
-## Create Tables
+## Create Table and Index
 
-Once you have a ledger, the next step is to create a table in the ledger. When you interact with QLDB, you use a SQL-compatible language called PartiQL. We have already covered the fact that QLDB uses a journal-first architecture, where no record can be updated without going through the journal first. Once committed to the journal, the changes are then projected into user created tables, which can be queried.
+After creating a ledger, the next step is to create a table and optionally indexes. QLDB is a schemaless database, with no schema enforced on the data in documents within any table.
 
-QLDB can be considered a schemaless database, as there is no schema enforced on the data in documents within any table. Any schema can only be enforced by an application once the data has been read.
+Indexes are used to improve query performance, and there are a number of limitations:
 
-Database design is important in QLDB. PartiQL has support for nested content which can significantly simplify how you interact with a ledger. In addition, currently QLDB has limited indexing capability and does not support all PartiQL operations. There are restrictions that you take into account.
-
-* Indexes can improve query performance, however
   * They can only be created on empty tables
   * They can only be created on a single field
   * They cannot be dropped once created
   * There is a maximum of 5 indexes per table
   * Query performance is only improved when you use an equality predicate e.g. fieldName = XYZ
-* There is a maximum of 20 active tables per ledger
+
+> **NOTE**: There is no current way to create a table or index through the AWS CLI or CloudFormation
+
+There is no current way to create a table or index through the AWS CLI or CloudFormation. The simplest way is to create tables and indexes through the AWS Console. With this option, you click on `Query editor` and then select a ledger. You can then execute the relevant PartiQL statement.
+
+The PartiQL to create a table is:
+
+{{< codeblock "language-shell" >}}
+CREATE TABLE table
+{{< /codeblock  >}}
+
+The PartiQL to create an index is:
+
+{{< codeblock "language-shell" >}}
+CREATE INDEX ON table (field)
+{{< /codeblock  >}}
 
 
-**Create table via AWS Console**
-
-The simplest way to get started is to create a table through the AWS Console. With this option, you specify the ledger previously created, click on `query ledger`, and enter the PartiQL statement in the query editor window as shown below:
 
 ![Create Table through Console](/images/qldb-create-table-console.png)
 
+{{< spacer >}}
 
-**Create table via custom resource**
+## Serverless Framework
 
-There is currently no way of creating a table and an index in CloudFormation or via the CLI. One way to ensure that the table and indexes are created along with the ledger is to make use of a custom resource in CloudFormation. Custom resources enable you to write custom provisioning logic in templates that AWS CloudFormation runs anytime you create, update (if you changed the custom resource), or delete stacks.
+One way to ensure that any tables or indexes are created at the same time as the ledger is to use a `custom resource` in CloudFormation. Custom resources allow you to write custom provisioning logic in templates that AWS CloudFormation runs anytime you create, update or delete stacks.
 
-The following is a snippet from a `serverless.yml` file to show how this is achieved:
+A simple demo project has been put together to supplement this guide which can be found at [QLDB Simple Demo](https://github.com/AWS-South-Wales-User-Group/qldb-simple-demo). 
+
+QLDB is a fully serverless database. The code examples throughout this guide use AWS Lambda to integrate with QLDB. Many frameworks exist for building serverless applications such as AWS SAM and Serverless Framework. The sample project has been created using Serverless Framework. This allows you to use CloudFormation in a `resources` section. The following is a snippet from the `serverless.yml` file
+
+
+QLDB is a fully serverless database, and it is likely that many people will use AWS Lambda to integrate with it. Many frameworks exist for building serverless applications such as AWS SAM and the Serverless Framework.
+
+Serverless Framework allows you to use CloudFormation in a `resources` section. The example below creates a QLDB ledger whilst calling a custom resource to create a table and create an index.
 
 {{< codeblock  "language-yaml" >}}
 resources:
@@ -190,278 +136,9 @@ resources:
         Version: 1.0  #change this to force redeploy
 {{< /codeblock >}}
 
-This shows how the custom Lambda function to create the index is only invoked once the Lambda function to create the table has successfully run, and this in turn is dependent on the creation of the ledger itself.
+The custom Lambda function to create the index is only invoked once the Lambda function to create the table has successfully run, and this in turn is dependent on the creation of the ledger itself.
 
 The `ServiceToken` is the ARN of the function that CloudFormation invokes when you create, update or delete the stack. The name of `CreateTableLamdaFunction.ARN` is the Logical ID in the CloudFormation that is created by the Serverless Framework for a function defined as `createTable` in the functions section.
 
-The full working example can be found in [QLDB Simple Demo](https://github.com/mlewis7127/qldb-simple-demo) and has been tagged using v0.2
 
 {{< spacer >}}
-
-## Insert, Query and Modify Data
-
-In order to prepare an application to use QLDB the following elements should be added to your build tool. In this 
-example we have used Maven:
-
-{{< markupcodeblock  >}}
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>bom</artifactId>
-            <version>2.0.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-{{< /markupcodeblock  >}}
-
-So that it is possible to map between entities and the Ion dataformat, Jackson Object Mapper now supports converting 
-between Ion and Java DTO's or JSON.
-
-To add this dependency, please add the following to your pom.file:
-
-{{< markupcodeblock  >}}
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-ion</artifactId>
-    <version>2.10.3</version>
-</dependency>
-{{< /markupcodeblock  >}}
-
-> Please note: in some of the associated demo applications the following library is also added as a dependency
-> <dependency>
->     <groupId>com.amazonaws</groupId>
->     <artifactId>aws-java-sdk-qldb</artifactId>
->     <version>1.11.693</version>
-> </dependency>
-> This is due to the Jackson Mapper using older versions of the classes and means it is not possible to map between
-> some of the types under the new package structure.
-
-#### QLDB Ledger Connection Class
-
-To be able to initialise PartiQL statements with the QLDB Driver, as per the AWS examples, a Ledger Connection class
-is created:
-
-{{< codeblock  "language-java" >}}
-public static PooledQldbDriver pooledDriver = createPooledQldbDriver();
-
-/**
- * Method to create a pooled qldb driver for creating sessions
- *
- * @return pooled qldb driver
- */
-public static PooledQldbDriver createPooledQldbDriver() {
-    AmazonQLDBSessionClientBuilder builder = AmazonQLDBSessionClientBuilder.standard();
-    builder.setRegion(LedgerConstants.REGION);
-    if(null != endpoint) {
-        builder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region));
-    }
-    if(null != credentialsProvider) {
-        builder.setCredentials(credentialsProvider);
-    }
-    return PooledQldbDriver.builder()
-        .withLedger(LedgerConstants.LEDGER_NAME)
-        .withSessionClientBuilder(builder)
-        .build();
-}
-{{< /codeblock >}}
-
-In the LedgerConnection it will also be worth adding a function to get the AmazonQLDB Client if you intend on running
-queries to verify documents which involve getting revisions. The following codeblock can be used to enable this:
-
-{{< codeblock  "language-java" >}}
-/**
- * Method to create an amazon qldb client that can be used when
- * verifying documents and getting revisions.
- *
- * @return amazon qldb client
- */
-public static AmazonQLDB createQLDBClient() {
-    AmazonQLDBClientBuilder builder = AmazonQLDBClientBuilder.standard();
-    builder.setRegion(LedgerConstants.REGION);
-    if(null != endpoint) {
-        builder.setEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region));
-    }
-    if(null != credentialsProvider) {
-        builder.setCredentials(credentialsProvider);
-    }
-    return builder.build();
-}
-{{< /codeblock >}}
-
-To create a QLDB Session it is useful to add a helper function that can be used later in the repository classes.
-
-{{< codeblock  "language-java" >}}
-public static QldbSession createQldbSession() {
-    return driver.getSession();
-}
-{{< /codeblock >}}
-
-### Repository Setup
-
-In the examples in this section we have used the Spring data JPA repository which provides the scaffolding for 
-Auto-wiring and method structure. 
-
-> Longer term we will look to add support to the Spring data repositories much like those familiar with Spring 
-> will have seen support for other common databases https://spring.io/projects/spring-data.
-
-To use the Spring or Spring boot support, the following can be added to the pom.xml file. Please note that Spring
-is not necessary or used within te Repository class itself and does not need to be used.
-
-{{< markupcodeblock >}}
-
-<parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.8.RELEASE</version>
-    <relativePath />
-</parent>
-
-....
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-</dependency>
-{{< /markupcodeblock >}}
-
-{{< markupcodeblock  "language-java" >}}
-public class BicycleLicenceQLDBRepository implements CrudRepository<BicycleLicence, String> {
-
-    // Used for Ion to Java Mapping
-    private IonValueMapper ION_MAPPER = new IonValueMapper(IonSystemBuilder.standard().build());
-    // Used for Java > Json Mapping
-    private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    
-    private PooledQldbDriver pooledQldbDriver;
-    private QldbSession qldbSession;
-    
-    {
-        pooledQldbDriver = LedgerConnextion.createPooledQldbDriver();
-        MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    }
-
-}
-{{< /markupcodeblock >}}
-
-If you wish to use the Spring Repository style implementation then it can be referenced using @Autowired or by injecting
-via the instantation through Constructors as follows:
-
-{{< codeblock  "language-java" >}}
-    // calling class
-    
-   .....
-   
-   private BicycleLicenceQldbRepository repository;
-   
-   public MyCallingClass(BicycleLicenceQldbRepository qldbRepository) {
-       this.repository = qldbRepository;
-   }
-{{< /codeblock >}}
-
-#### Inserting Documents
-
-The CrudRepository interface forces method signature implementations for the key Create, Retrive, Update and Delete 
-functions. The create method utilises the LedgerConnection pooled QLDB Driver to insert records in to the ledger.
-
-{{< markupcodeblock  "language-java" >}}
-@Override
-public <S extends BicycleLicence> S save(S s) {
-    qldbSession = LedgerConnection.createQldbSession();
-    qldbSession.execute(txn -> {
-        try {
-            final String query = String.format("INSERT INTO %s ?, "licence");
-            final IonValue document = (IonValue) ION_MAPPER.writeValueAsIonValue(s);
-            final List<IonValue> parameters = Collections.singletonList(document);
-            Result result = txn.execute(query, parameters);
-        }
-        catch (IOException ioe) {
-            throw new IllegalStateException(ioe);
-        }
-    });
-    return s;
-}
-{{< /markupcodeblock >}}
-
-##### Retrieving the QLDB Document Id
-
-It is possible that you can use the returning Result class to get hold of the generated Document Id, this will be
-demonstrated when we add query support to the QLDB Repository where the Result class is parsed to a List of IonStruct.
-
-Please note in this example it is possible to get a document based on email as it has to be unique in this demo
-
-If you wish to query for the document Id explicitly it is possible to do this as follows: 
-
-{{< markupcodeblock  "language-java" >}}
-@Override
-public IonValue getDocumentId(final String uniqueObjectRef) {
-    final String query = "select metadata.id as docId from _ql_committed_licence where data.email = ?";
-    qldbSession = LedgerConnection.createQldbSession();
-    IonValue documentId = qldbSession.execute(txn -> {
-        try {
-            final List<IonValue> parameters = Collections.singletonList(ION_MAPPER.writeValueAsIonValue(uniqueObjectRef));
-            final Result result = txn.execute(query, parameters);
-            
-            List<IonStruct> documentList = new ArrayList<>();
-            result.iterator().forEachRemaining(row - > {
-                docList.add((IonStruct)) row);
-            });
-            // in this example there is only one record expected in the list
-            // this is iterating rather than returning single to demonstrate
-            return docList.get(0).get("docId");
-        }
-        catch (IOException ioe) {
-            throw new IllegalStateException(ioe);
-        }
-    });
-    return documentId;
-}
-{{< /markupcodeblock >}}
-
-#### Querying Documents
-
-Querying documents in QLDB is very similar in process to that of creating documents. The key areas highlighted in the 
-example below demonstrate how to use the list of ION structs returned from the query execution to map back to Java using
-Jackson.
-
-{{< markupcodeblock  "language-java" >}}
-
-public BicycleLicence findByEmail(final String email) {
-    List<BicycleLicences> licences = new ArrayList<>();
-    qldbSession = LedgerConnection.createQldbSession();
-    final String query = String.format("SELECT * FROM %s where email = ?", "licence");
-    qldbSession.execute(txn -> {
-        List<IonValue> parameters = null;
-        try {
-            parameters = Collections.singletonList(ION_MAPPER.writeValueAsIonValue(email);
-            List<IonStruct> documents = toIonStructs(txn.execute(query, parameters));
-            for(IonStruct struct : documents) {
-                StringBuilder stringBuilder = new StringBuilder();
-                try (IonWriter jsonWriter = IonTextWriterBuilder.json().withPrettyPrinting().build(stringBuilder)) {
-                    rewrite(struct.toString(), jsonWriter);
-                }
-                BicycleLicence licence = OBJECT_MAPPER.readValue(stringBuilder.toString(), BicycleLicence.class);
-                licences.add(licence);
-            }
-        }
-        catch(IOException ioe) {
-            throw new IllegalStateException(ioe);
-        }
-    });
-    ....
-    // return object from list  
-    
-public void rewrite(String textIon, IonWriter writer) throws IOException {
-    IonReader reader = IonReaderBuilder.standard().build(textIon);
-    writer.writeValues(reader);
-}
-
-public static List<IonStruct> toIonStructs(final Result result) {
-    final List<IonStruct> documentList = new ArrayList<>();
-    result.iterator().forEachRemaining(row -> documentList.add((IonStruct) row);
-    return documentList;
-}
-{{< /markupcodeblock >}}
-
