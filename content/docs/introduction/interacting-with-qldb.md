@@ -77,7 +77,7 @@ await qldbDriver.executeLambda(async txn => {
 
 #### Creating a record
 
-To create a new record, simply insert a document into a table:
+To create a new record, insert a document into a table:
 
 {{< codeblock "language-javascript" >}}
 await qldbDriver.executeLambda(async txn => {
@@ -99,9 +99,50 @@ The `execute` method returns a Promise that resolves to a `Result` object. This 
 ]
 {{< /codeblock  >}}
 
+If you need to create multiple records within a single transaction, these can all be carried out as part of the `executeLambda` call:
+
+{{< codeblock "language-javascript" >}}
+await qldbDriver.executeLambda(async (txn) => {
+  let a = await txn.execute("INSERT INTO licence VALUE {'name': 'QLDB', 'type': 'Guide' }");
+  let b = await txn.execute("INSERT INTO licence VALUE {'name': 'Centralised', 'type': 'Ledger' }");
+  return {a: a, b: b};
+})
+{{< /codeblock  >}}
+
+When this method is invoked, the driver acquires a `Transaction` which is handed to the `TransactionExecutor` instance passed in via the transaction function. The PartiQL statements executed are not immediately committed. The driver will only attempt to commit the transaction once all the execution is carried out. If there is a failure, then the driver will attempt to retry the entire transaction block.
+
+
 {{< spacer >}}
 
 #### Reading a record
+
+To read a record, execute a select statement against a table:
+
+{{< codeblock "language-javascript" >}}
+const getRecord = async (id) => {
+    await qldbDriver.executeLambda(async (txn) => {
+        const query = `SELECT * FROM Table WHERE Attribute = ?`;
+        const result = await txn.execute(query, id);
+        const resultList = result.getResultList();
+        ...
+    },() => console.log("Retrying due to OCC conflict..."));
+};
+{{< /codeblock  >}}
+
+The `Result` object returned represents the buffered set of results in an array. The `getResultList()` function returns the list of Ion values returned from the enquiry. You can check the `length` property to determine how many results were returned:
+
+{{< codeblock "language-javascript" >}}
+  const resultList = result.getResultList();
+  ...
+  if (resultList.length === 0) {
+      // no record found processing
+  } else if (resultList.length === 1) {
+      // single record found processing
+  } else {
+      // multiple records found processing
+  }
+};
+{{< /codeblock  >}}
 
 {{< spacer >}}
 
