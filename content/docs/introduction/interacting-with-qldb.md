@@ -144,6 +144,20 @@ The `Result` object returned represents the buffered set of results in an array.
 };
 {{< /codeblock  >}}
 
+If you just want to log the document revision returned by QLDB, you can use `JSON.stringify()`:
+
+{{< codeblock "language-javascript" >}}
+JSON.stringify(resultList[0], null, 2)};
+{{< /codeblock  >}}
+
+Otherwise, you can use simple calls to retrieve specific values out of the record that is returned. The following code will extract the `documentId` returned after inserting a new document.
+
+{{< codeblock "language-javascript" >}}
+const docIdArray = result.getResultList()
+const docId = docIdArray[0].get("documentId").stringValue();
+...
+{{< /codeblock  >}}
+
 {{< spacer >}}
 
 #### Updating a record
