@@ -190,4 +190,17 @@ In the same way as for creating a record, the result object returned contains th
 
 #### Deleting a record
 
+To delete a record, execute a delete statement against a table:
+
+{{< codeblock "language-javascript" >}}
+await qldbDriver.executeLambda(async (txn) => {
+  const statement = `DELETE FROM Table WHERE id = ?`;
+  const result = await txn.execute(statement, id);
+  const resultList = result.getResultList();
+  ...
+}
+{{< /codeblock  >}}
+
+The result object returned contains the document ID of the record that has been deleted.
+
 {{< spacer >}}
