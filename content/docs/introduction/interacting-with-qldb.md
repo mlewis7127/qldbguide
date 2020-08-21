@@ -158,9 +158,33 @@ const docId = docIdArray[0].get("documentId").stringValue();
 ...
 {{< /codeblock  >}}
 
+You can also use multiple attributes with a WHERE predicate clause.
+
+{{< codeblock "language-javascript" >}}
+const query = `SELECT * FROM Table WHERE a = ? AND b = ?`;
+const result = await txn.execute(query, "valueA", "valueB");
+...
+};
+{{< /codeblock  >}}
+
+In addition, inner joins are also supported.
+
 {{< spacer >}}
 
 #### Updating a record
+
+To update a record, execute an update statement against a table:
+
+{{< codeblock "language-javascript" >}}
+await qldbDriver.executeLambda(async (txn) => {
+  const statement = `UPDATE Table SET A = ?, B = ?, C = ? WHERE D = ?`;
+  const result = await txn.execute(statement, valueA, valueB, valueC, valueD);
+  const resultList = result.getResultList();
+  ...
+}
+{{< /codeblock  >}}
+
+In the same way as for creating a record, the result object returned contains the document ID of the record that has been updated.
 
 {{< spacer >}}
 
