@@ -8,7 +8,7 @@ draft: false
 
 # Interacting with QLDB
 
-> **Note** QLDB currently provides supported drivers for Java, Python and Nodejs. All examples in this guide use Nodejs
+> **Note** QLDB currently provides supported drivers for Java, Python, Nodejs and Go. All examples in this guide use Nodejs
 
 ## Environment Setup
 
