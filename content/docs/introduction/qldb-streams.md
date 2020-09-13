@@ -249,7 +249,7 @@ const promiseDeaggregate = (record) =>
 });
 {{< /codeblock  >}}
 
-Once returned, the record is then processed. This involves decoding the base64 encoded data. The payload is the actual Ion binary record published by QLDB to the stream. This is loaded into memory using `ion-js`, and then any relevant processing can take place. In the case of the demo, the only record types processed were REVISION_DETAILS with all others being skipped.
+Once returned, the record is then processed. This involves decoding the base64 encoded data. The payload is the actual Ion binary record published by QLDB to the stream. This is loaded into memory using `ion-js`, and then any relevant processing can take place. 
 
 
 {{< codeblock "language-javascript" >}}
@@ -261,16 +261,43 @@ async function processRecords(records) {
 
       // payload is the actual ion binary record published by QLDB to the stream
       const ionRecord = ion.load(payload);
-
-      // Only process records where the record type is REVISION_DETAILS
-      if (JSON.parse(ion.dumpText(ionRecord.recordType)) !== REVISION_DETAILS) {
-        console.log(`Skipping record of type ${ion.dumpPrettyText(ionRecord.recordType)}`);
-      } else {
-        // process record
-      }
+      ...
     })
   );
 }
+{{< /codeblock  >}}
+
+Ion values implement the strongly-typed `dom.Value` interface, so you can use DOM methods to make it easy to work with in `JavaScript`.
+
+{{< codeblock "language-javascript" >}}
+  // retrieve the version and id from the metadata section of the message
+  const version = ionRecord.payload.revision.metadata.version.numberValue();
+  const id = ionRecord.payload.revision.metadata.id.stringValue();
+{{< /codeblock  >}}
+
+In the case of the demo, the only record types processed were REVISION_DETAILS with all others being skipped.
+
+{{< codeblock "language-javascript" >}}
+  // Only process records where the record type is REVISION_DETAILS
+  if (ionRecord.recordType.stringValue() !== REVISION_DETAILS) {
+    console.log(`Skipping record of type ${ion.dumpPrettyText(ionRecord.recordType)}`);
+  } else {
+    // process record
+  }
+{{< /codeblock  >}}
+
+If a document has been deleted, there will be no `data` section present in the `REVISION_DETAILS` record. The `metadata` section will still be present, which allows the `id` to be retrieved.
+
+{{< codeblock "language-javascript" >}}
+  // Check to see if the data section exists.
+  if (ionRecord.payload.revision.data == null) {
+    Log.debug('No data section so handle as a delete');
+    ...
+  } else {
+    const points = ionRecord.payload.revision.data.penaltyPoints.numberValue();
+    const postcode = ionRecord.payload.revision.data.postcode.stringValue();
+    ...
+  }
 {{< /codeblock  >}}
 
 {{< spacer >}}
