@@ -326,9 +326,63 @@ Each REVISION_DETAILS record includes the `version` number of the document in th
 
 If necessary, the use of one or both of these values can help to handle duplicate or out-of-order records.
 
+{{< spacer >}}
+
 ## Streaming data from QLDB to DynamoDB
 
-For more details about streaming data from QLDB to DynamoDB, see this [blog post](https://dev.to/aws-heroes/real-time-streaming-for-amazon-qldb-3c3c)
+The source code for streaming data from QLDB to DynamoDB can be found [here](https://github.com/AWS-South-Wales-User-Group/qldb-simple-demo/tree/master/streams-dynamodb). For more details about streaming data from QLDB to DynamoDB, see this [blog post](https://dev.to/aws-heroes/real-time-streaming-for-amazon-qldb-3c3c)
+
+As the full document revision is sent each time, creates and updates to DynamoDB can be handled by an upsert. To make this work, the `id` and `version` of the document that is contained in the `metadata` section are used. The `id` is used as the primary key, and the `version` as an attribute of the item. The `upsert` code sample is shown below:  
+
+{{< codeblock "language-json" >}}
+const updateLicence = async (id, points, postcode, version) => {
+  const params = {
+    TableName: TABLE_NAME,
+    Key: { pk: id },
+    UpdateExpression: 'set penaltyPoints=:points, postcode=:code, version=:version',
+    ExpressionAttributeValues: {
+      ':points': points,
+      ':code': postcode,
+      ':version': version,
+    },
+    ConditionExpression: 'attribute_not_exists(pk) OR version < :version',
+  };
+
+  try {
+    await dynamodb.update(params).promise();
+  } catch(err) {
+    Log.error(`Unable to update licence: ${id}. Error: ${err}`);
+  }
+};
+{{< /codeblock  >}}
+
+The critical part is the `ConditionExpression`. This specifies that the item will be created **ONLY** if one of the following conditions is true:
+
+* There is no existing item with this `id` as the primary key (to allow for creates), OR
+* The version is greater than the value of the current version attribute
+
+If neither of these conditions are true, then no update will take place, and the following error is thrown:
+
+```
+ConditionalCheckFailedException: The conditional request failed
+```
+
+There is a challenge with deletes. This is because an older update document revision may arrive after the delete revision has been received. This maybe the case when a QLDB stream is first created and streams all current revisions of documents to date. In the demo, we handled this by using a concept of a 'soft delete' or 'tombstone', by marking the item with an `isDeleted` attribute but without actually deleting it. This means we use an `update` and not a `delete`.
+
+{{< codeblock "language-json" >}}
+  const params = {
+    TableName: TABLE_NAME,
+    Key: { pk: id },
+    UpdateExpression: 'set version=:version, isDeleted=:isDeleted',
+    ExpressionAttributeValues: {
+      ':version': version,
+      ':isDeleted': true,
+    },
+    ConditionExpression: 'attribute_not_exists(pk) OR version < :version',
+  };
+{{< /codeblock  >}}
+
+{{< spacer >}}
 
 ## Streaming data from QLDB to Elasticsearch
 
