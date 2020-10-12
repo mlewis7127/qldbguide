@@ -66,7 +66,6 @@ After creating a ledger, the next step is to create a table and optionally index
 
 Indexes are used to improve query performance, and there are a number of limitations:
 
-  * They can only be created on empty tables
   * They can only be created on a single field
   * They cannot be dropped once created
   * There is a maximum of 5 indexes per table
