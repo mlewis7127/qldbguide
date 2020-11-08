@@ -62,8 +62,6 @@ Optionally, you can also specify tags to attach to your ledger.
 
 There is CloudFormation support for creating a QLDB ledger, but not for creating a table or index.
 
-> **NOTE**: There is no current way to create a table or index through the AWS CLI or CloudFormation
-
 To ensure that any required tables or indexes are created at deployment time, along with the ledger, you can use a `custom resource` in CloudFormation. Custom resources allows you to write custom provisioning logic in templates that AWS CloudFormation runs anytime you create, update or delete a stack.
 
 QLDB is a fully serverless database. The code examples throughout this guide use AWS Lambda to integrate with QLDB. Many frameworks exist for building serverless applications such as AWS SAM and Serverless Framework. It is strongly recommended to use an abstraction framework on top of CloudFormation for deploying QLDB as part of a serverless application. 
