@@ -8,59 +8,11 @@ draft: false
 
 # Getting Started
 
-## Create Ledger
+## Using AWS Console
 
-The first step is to create a ledger. There are a number of ways to do this from the AWS Console, AWS CLI and CloudFormation.
-
-**Create ledger via AWS Console**
-
-The easiest way to get started is by creating a ledger through the AWS Console. With this option, you simply specify a name for the ledger, and any option tags.
+The first step is to create a ledger. In the AWS console, you specify a name for the ledger and any optional tags.
 
 ![Create Ledger through Console](/images/qldb-create-ledger-console.png)
-
-
-**Create ledger via AWS CLI**
-
-You can also create a ledger directly via the AWS Command Line Interface (CLI), using the createLedger call. With this, you must specify a ledger name and a permissions mode. The only permissions mode currently supported is `ALLOW_ALL`
-
-{{< codeblock "language-shell" >}}
-aws qldb create-ledger --name qldb-guide --permissions-mode ALLOW_ALL
-{{< /codeblock  >}}
-
-When you create a ledger, deletion protection is enabled by default. This is a feature in QLDB that prevents ledgers from being deleted by any user. You can disable deletion protection on ledger creation by using the `--no-deletion-protection` parameter.
-
-Optionally, you can also specify tags to attach to your ledger.
-
-
-**Create ledger via AWS CloudFormation**
-
-You can create a ledger using CloudFormation. The example file below uses the same details as the CLI example above.
-
-{{< codeblock "language-yml" >}}
-create-ledger-cf.yml
-AWSTemplateFormatVersion: "2010-09-09"
-Resources:
-    qldbGuideLedger:
-        Type: AWS::QLDB::Ledger
-        Properties:
-          Name: qldb-guide
-          DeletionProtection: false
-          PermissionsMode: ALLOW_ALL
-          Tags:
-            - 
-              Key: name
-              Value: qldb-guide
-{{< /codeblock >}}
-
-To deploy the template, run the following from a terminal window in the same directory:
-
-{{< codeblock "language-shell" >}}
-aws cloudformation deploy --template-file ./create-ledger-cf.yml --stack-name qldb-demo 
-{{< /codeblock  >}}
-
-
-{{< spacer >}}
-## Create Table and Index
 
 After creating a ledger, the next step is to create a table and optionally indexes. QLDB is a schemaless database, with no schema enforced on the data in documents within any table.
 
@@ -72,9 +24,7 @@ Indexes are used to improve query performance, and there are a number of limitat
   * There is a maximum of 5 indexes per table
   * Query performance is only improved when you use an equality predicate e.g. fieldName = XYZ
 
-> **NOTE**: There is no current way to create a table or index through the AWS CLI or CloudFormation
-
-There is no current way to create a table or index through the AWS CLI or CloudFormation. The simplest way is to create tables and indexes through the AWS Console. With this option, you click on `Query editor` and then select a ledger. You can then execute the relevant PartiQL statement.
+In the console, you click on `Query editor` and then select a ledger. You can then execute the relevant PartiQL statement.
 
 The PartiQL to create a table is:
 
@@ -88,24 +38,104 @@ The PartiQL to create an index is:
 CREATE INDEX ON table (field)
 {{< /codeblock  >}}
 
-
-
 ![Create Table through Console](/images/qldb-create-table-console.png)
 
 {{< spacer >}}
 
-## Serverless Framework
+## Using AWS CLI
 
-One way to ensure that any tables or indexes are created at the same time as the ledger is to use a `custom resource` in CloudFormation. Custom resources allow you to write custom provisioning logic in templates that AWS CloudFormation runs anytime you create, update or delete stacks.
+You can create a ledger directly via the AWS Command Line Interface (CLI), using the `createLedger` call. With this, you must specify a ledger name and a permissions mode. The only permissions mode currently supported is `ALLOW_ALL`.
 
-A simple demo project has been put together to supplement this guide which can be found at [QLDB Simple Demo](https://github.com/AWS-South-Wales-User-Group/qldb-simple-demo). 
+{{< codeblock "language-shell" >}}
+aws qldb create-ledger --name qldb-guide --permissions-mode ALLOW_ALL
+{{< /codeblock  >}}
 
-QLDB is a fully serverless database. The code examples throughout this guide use AWS Lambda to integrate with QLDB. Many frameworks exist for building serverless applications such as AWS SAM and Serverless Framework. The sample project has been created using Serverless Framework. This allows you to use CloudFormation in a `resources` section. The following is a snippet from the `serverless.yml` file
+When you create a ledger, deletion protection is enabled by default. This is a feature in QLDB that prevents ledgers from being deleted by any user. You can disable deletion protection on ledger creation by using the `--no-deletion-protection` parameter.
 
+Optionally, you can also specify tags to attach to your ledger.
 
-QLDB is a fully serverless database, and it is likely that many people will use AWS Lambda to integrate with it. Many frameworks exist for building serverless applications such as AWS SAM and the Serverless Framework.
+> **NOTE**: There is no current way to create a table or index through the AWS CLI
 
-Serverless Framework allows you to use CloudFormation in a `resources` section. The example below creates a QLDB ledger whilst calling a custom resource to create a table and create an index.
+{{< spacer >}}
+
+## Using AWS CloudFormation
+
+There is CloudFormation support for creating a QLDB ledger, but not for creating a table or index.
+
+> **NOTE**: There is no current way to create a table or index through the AWS CLI or CloudFormation
+
+To ensure that any required tables or indexes are created at deployment time, along with the ledger, you can use a `custom resource` in CloudFormation. Custom resources allows you to write custom provisioning logic in templates that AWS CloudFormation runs anytime you create, update or delete a stack.
+
+QLDB is a fully serverless database. The code examples throughout this guide use AWS Lambda to integrate with QLDB. Many frameworks exist for building serverless applications such as AWS SAM and Serverless Framework. It is strongly recommended to use an abstraction framework on top of CloudFormation for deploying QLDB as part of a serverless application. 
+
+{{< spacer >}}
+
+### Using AWS SAM
+
+The [AWS Serverless Application Model (SAM)](https://aws.amazon.com/serverless/sam/) is an open-source framework for building serverless applications. It provides shorthand syntax to express functions, APIs, databases, and event source mappings.
+
+AWS SAM templates are an extension of AWS CloudFormation templates. The following snippet from an AWS SAM template shows the creation of a QLDB ledger, a custom resource to create a table which is dependent upon the ledger being created first, and a custom resource to create an index which is dependent upon the table being created.
+
+{{< codeblock  "language-yaml" >}}
+Resources:
+
+  QldbLedger:
+    Type: AWS::QLDB::Ledger
+    Properties:
+      Name: qldb-bicycle-licence-sam
+      DeletionProtection: false
+      PermissionsMode: ALLOW_ALL
+      Tags:
+        - 
+          Key: name
+          Value: qldb-bicycle-licence-sam
+
+  QldbTable:
+    Type: Custom::CreateQldbTable
+    DependsOn: QldbLedger
+    Properties:
+      ServiceToken: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CreateQldbTable}
+      Version: 1.0 
+
+  QldbIndex:
+    Type: Custom::qldbIndexes
+    DependsOn: QldbTable
+    Properties:
+      ServiceToken: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CreateQldbIndex}
+      Version: 1.0 
+
+{{< /codeblock >}}
+
+The `ServiceToken` is the ARN of the AWS Lambda function that CloudFormation invokes when you create, update or delete the stack. This Lambda function can be defined in the same template. The `QldbTable` logical name invokes the `CreateQldbTable` logical name which is defined below:
+
+{{< codeblock  "language-yaml" >}}
+  CreateQldbTable:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/functions/createQldbTable.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          LEDGER_NAME: !Ref QldbLedger
+          LICENCE_TABLE_NAME: BicycleLicence
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow 
+              Action:
+                - qldb:SendCommand
+              Resource: !Sub arn:aws:qldb:${AWS::Region}:${AWS::AccountId}:ledger/${QldbLedger}
+
+{{< /codeblock >}}
+
+{{< spacer >}}
+
+### Using Serverless Framework
+
+The [Serverless Framework](https://www.serverless.com/) is a popular open source framework for building serverless applications, that has a wide range of plugins available to extend its functionality.
+
+The serverless framework supports CloudFormation in a `resources` section. The following shows the similar approach for creating a QLDB ledger, table and index as used by AWS SAM.
 
 {{< codeblock  "language-yaml" >}}
 resources:
@@ -135,10 +165,5 @@ resources:
         ServiceToken: !GetAtt CreateIndexLambdaFunction.Arn
         Version: 1.0  #change this to force redeploy
 {{< /codeblock >}}
-
-The custom Lambda function to create the index is only invoked once the Lambda function to create the table has successfully run, and this in turn is dependent on the creation of the ledger itself.
-
-The `ServiceToken` is the ARN of the function that CloudFormation invokes when you create, update or delete the stack. The name of `CreateTableLamdaFunction.ARN` is the Logical ID in the CloudFormation that is created by the Serverless Framework for a function defined as `createTable` in the functions section.
-
 
 {{< spacer >}}

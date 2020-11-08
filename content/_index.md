@@ -7,7 +7,7 @@ title = "Amazon QLDB Guide"
 
 ### Quantum Ledger Database (QLDB) explained
 
-**A guide to the AWS centralised ledger database**
+**A guide to the AWS ledger database**
 
 {{< button "docs/" "Read the Docs" >}}
 
