@@ -70,6 +70,8 @@ As a result of the strong isolation levels offered by QLDB, there is limited sup
   * There is no support for `ORDER BY` to allow for sorting
   * There is no support for `LIMIT` to support pagination
 
+The workaround is to stream out data to another database engine using QLDB streams.
+
 {{< spacer >}}
 
 ## KMS
