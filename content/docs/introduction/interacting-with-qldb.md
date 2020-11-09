@@ -232,3 +232,13 @@ await qldbDriver.executeLambda(async (txn) => {
 The result object returned contains the document ID of the record that has been deleted.
 
 {{< spacer >}}
+
+## QLDB Shell
+
+Amazon QLDB provides a command line shell for interaction with the transactional data plane. The QLDB shell enables you to run PartiQL statements on ledger data. This shell is written in Python and is open-sourced in a [GitHub repository](https://github.com/awslabs/amazon-qldb-shell). The shell is a great way to try and PartiQL statements and interact with a ledger from a developer perspective.
+
+More details can be found in the [developer guide](https://docs.aws.amazon.com/qldb/latest/developerguide/data-shell.html)
+
+![Using the QLDB Shell](/images/qldbshell.png)
+
+{{< spacer >}}
