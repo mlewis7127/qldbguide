@@ -9,7 +9,7 @@ draft: false
 # Data Design
 
 ## Background
-Amazon QLDB is designed to address the needs of high-performance online transaction processing (OLTP) workloads, with streaming support to meet OLAP requirements. This means QLDB is optimised for a specific set of query patterns, even though it supports a SQL-compatible query language.
+Amazon QLDB is designed to address the needs of high-performance online transaction processing (OLTP) workloads, with streaming support to meet OLAP requirements. This means QLDB is optimised for a specific set of query patterns, even though it supports a SQL-like query language.
 
 It is critical to design applications and their data models to work with known constraints. Otherwise, as your tables grow, you will encounter significant performance problems, including query latency, transaction timeouts, and concurrency conflicts. In addition, QLDB supports event-driven workloads through its streams functionality, and the data design has a direct impact on the events transmitted on the stream.
 
@@ -18,7 +18,7 @@ So how do you go about deciding the right data model for your QLDB ledger applic
 The reality is there is no one size fits all approach, as it depends upon your specific use case. This section looks to set out the important considerations you should take into account.
 
 ## Normalisation vs Denormalisation
-You interact with QLDB through a SQL-compatible query language, and you write data into tables that you create. However, QLDB is not a traditional relational database. Traditional relational databases introduced the concept of normalisation to reduce the duplication of data, by structuring data into separate tables, and creating joins between them. This was started because of the prohibitive cost of storage when relational databases originated back in the 1970s. The past decade has seen an explosive growth in NoSQL database engines, where data can be denormalised and stored in a format used by the calling application, reducing the [`impedance mismatch`](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch).
+You interact with QLDB through a SQL-like query language, and you write data into tables that you create. However, QLDB is not a traditional relational database. Traditional relational databases introduced the concept of normalisation to reduce the duplication of data, by structuring data into separate tables, and creating joins between them. This was started because of the prohibitive cost of storage when relational databases originated back in the 1970s. The past decade has seen an explosive growth in NoSQL database engines, where data can be denormalised and stored in a format used by the calling application, reducing the [`impedance mismatch`](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch).
 
 QLDB writes documents, which are Amazon Ion struct objects, into tables. This makes it similar in nature to a document database. It is considered `schemaless`. When you create a table in QLDB, you do not specify any attributes or data types to it. This gives far greater flexibility, and means new fields and values can be added without amending the table structure. A more accurate term coined by Martin Kleppmann is `schema-on-read`, as the structure of the document needs to be understood and interpreted by a calling application.
 
