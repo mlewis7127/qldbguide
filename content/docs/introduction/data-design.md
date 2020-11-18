@@ -118,7 +118,7 @@ You need to look at how many and what type of reads the application makes. If an
 
 #### Use of Indexes
 
-Indexes are strongly recommended to improve query performance. However, indexes can only be created on a top level field, and not on a field in a nested document. If you have a specific requirement to query against attributes in a nested document, for example, to pull back all home addresses, you would use syntax such as:
+Indexes are strongly recommended to improve query performance. You can currently create up to 5 indexes on a table. Indexes can only be created on a top level field, and not on a field in a nested document. If you have a specific requirement to query against attributes in a nested document, for example, to pull back all home addresses, you would use syntax such as:
 
 {{< codeblock "language-shell" >}}
 SELECT a.houseNo, a.street, a.town
@@ -131,7 +131,10 @@ The `@` character is optional but explicitly indicates that it is the `address` 
 Storing addresses in their own table would enable indexes to be created. However, the example above would be considered querying on a low-cardinality field, which can produce large result sets more likely to result on transaction timeouts or cause unintended OCC conflicts. These are the types of queries that streaming to a specific analytics solution is recommended.
 
 
-As a best practice, you should run statements with a WHERE predicate clause that filters on an indexed field or a document ID. QLDB requires an equality operator (= or IN) on an indexed field to efficiently look up a document.
+> As a best practice, you should run statements with a WHERE predicate clause that filters on an indexed field or a document ID. QLDB requires an equality operator (= or IN) on an indexed field to efficiently look up a document.
+
+Currently, QLDB only supports conjunctions and not disjunctions. This leads to the following optimised query patterns:
+
 
 {{< codeblock "language-yaml" >}}
 --Indexed field (VIN) lookup using the = operator
@@ -141,11 +144,6 @@ WHERE VIN = '1N4AL11D75C109151'
 --Indexed field (VIN) AND non-indexed field (City) lookup
 SELECT * FROM VehicleRegistration
 WHERE VIN = '1N4AL11D75C109151' AND City = 'Seattle'
-
---Multiple indexed fields (VIN, LicensePlateNumber) lookup using the OR operator
---Both fields must be indexed to avoid a table scan
-SELECT * FROM VehicleRegistration
-WHERE VIN = '1N4AL11D75C109151' OR LicensePlateNumber = 'LEWISR261LL'
 
 --Indexed field (VIN) lookup using the IN operator
 SELECT * FROM VehicleRegistration
@@ -186,7 +184,14 @@ DELETE FROM Vehicle
 --No document id, and no date range for the history() function
 SELECT * FROM history(Vehicle)
 
+--Multiple indexed fields (VIN, LicensePlateNumber) lookup using the OR operator
+--Disjunctions not currently supported 
+SELECT * FROM VehicleRegistration
+WHERE VIN = '1N4AL11D75C109151' OR LicensePlateNumber = 'LEWISR261LL'
+
+
 {{< /codeblock  >}}
+
 
 
 #### Document Size
