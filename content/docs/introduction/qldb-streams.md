@@ -290,7 +290,7 @@ If a document has been deleted, there will be no `data` section present in the `
 
 {{< codeblock "language-javascript" >}}
   // Check to see if the data section exists.
-  if (ionRecord.payload.revision.data == null) {
+  if (! ionRecord.payload.revision.data) {
     Log.debug('No data section so handle as a delete');
     ...
   } else {
