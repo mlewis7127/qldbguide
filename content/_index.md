@@ -9,7 +9,7 @@ title = "Amazon QLDB Guide"
 
 **A guide to the AWS ledger database**
 
-{{< button "docs/" "Read the Docs" >}} {{< button "https://account.qldbdemo.com" "Try the Demo">}}
+{{< button "docs/" "Read the Docs" >}} {{< button "https://demo.qldbguide.com" "Try the Demo">}}
 
 Inspired by Alex DeBrie's [DynamoDB Guide](https://www.dynamodbguide.com/), which in turn was inspired by Craig Kerstein's [Postgres Guide](http://postgresguide.com/)
 

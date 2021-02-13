@@ -2,11 +2,9 @@
 title: "QLDB Streams"
 date: 2020-07-10T18:41:23Z
 lastmod: 2020-07-11
-weight: 35
+weight: 6
 draft: false
 ---
-
-# QLDB Streams
 
 QLDB Streams is a feature that allows changes made to the journal to be continuously written in near real time to a destination Kinesis Data Stream. Consumers can subscribe to the stream, and take appropriate action. There are a number of advantages of this approach:
 

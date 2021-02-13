@@ -2,11 +2,9 @@
 title: "Database Freedom"
 date: 2019-12-08T22:50:19Z
 lastmod: 2020-07-11
-weight: 15
+weight: 2
 draft: false
 ---
-
-# Database Freedom
 
 ## Purpose Built Databases
 

@@ -2,11 +2,9 @@
 title: "Getting Started"
 date: 2020-02-21T18:32:44Z
 lastmod: 2020-02-21
-weight: 20
+weight: 3
 draft: false
 ---
-
-# Getting Started
 
 ## Using AWS Console
 

@@ -2,11 +2,9 @@
 title: "Data Design"
 date: 2020-02-21T18:43:01Z
 lastmod: 2020-07-11
-weight: 40
+weight: 7
 draft: false
 ---
-
-# Data Design
 
 ## Background
 Amazon QLDB is designed to address the needs of high-performance online transaction processing (OLTP) workloads, with streaming support to meet OLAP requirements. This means QLDB is optimised for a specific set of query patterns, even though it supports a SQL-like query language.
