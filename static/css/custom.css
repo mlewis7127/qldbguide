@@ -3,6 +3,10 @@ img[alt="logo"] {
   animation-fill-mode: both;
 }
 
+img[alt="SCREENSHOT"] {
+  width: 50%;
+}
+
 /** Other styles needed to fade */
 #no2 {
   animation: fade 1s 1s ease-in-out both;
