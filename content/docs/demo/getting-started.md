@@ -3,7 +3,7 @@ title: Getting Started
 weight: 12
 ---
 
-## Overview
+## Signup
 
 To get started, click one of the links to the [QLDB Demo](https://demo.qldbguide.com). This will take you to a hosted page where you can sign in if you already have credentials, else create an account:
 
