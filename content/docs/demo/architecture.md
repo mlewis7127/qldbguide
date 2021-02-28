@@ -26,3 +26,11 @@ Note that no access is provided to data such as the email address stored in the 
 Access to the backend REST APIs is controlled using `Amazon Cognito` user pools as an authorizer. The web application makes an API call including the Identity Token of the signed-in user. The backend APIs are protected by `API Gateway` which validates the claimed identity against the one from the user pool.
 
 The authenticated identity from the Cognito User Pool is retrieved from the claims in the `requestContext.authorizer.claims` section of the `event` passed into the `Lambda` function. This is stored as part of the document in QLDB and streamed out. This is used to ensure that you can only view records in `Elasticsearch` or `DynamoDB` that you created yourself.
+
+## Architecture
+
+The architecture that gets deployed for the QLDB Demo application is shown below:
+
+![QLDB Demo Architecture](/images/qldbdemo-architecture.png)
+
+The Web UI is a `React` application built using the `Amplify` framework that gets deployed to `S3` (and `CloudFront`). It uses the pre-built UI components to create the entire authentication flow. This utilises the `withAuthenticator` as a higher-order Component (`HoC`) that wraps `AmplifyAuthenticator`. It also ensures that a user has to be authenticated e.g. have logged in.
