@@ -33,4 +33,14 @@ The architecture that gets deployed for the QLDB Demo application is shown below
 
 ![QLDB Demo Architecture](/images/qldbdemo-architecture.png)
 
-The Web UI is a `React` application built using the `Amplify` framework that gets deployed to `S3` (and `CloudFront`). It uses the pre-built UI components to create the entire authentication flow. This utilises the `withAuthenticator` as a higher-order Component (`HoC`) that wraps `AmplifyAuthenticator`. It also ensures that a user has to be authenticated e.g. have logged in.
+The Web UI is a `React` application built using the `Amplify` framework that gets deployed to `S3` (and `CloudFront`). It uses the pre-built UI components to create the entire authentication flow. This utilises the `withAuthenticator` as a higher-order Component (`HoC`) that wraps `AmplifyAuthenticator`. It also ensures that a user has to be authenticated. When the user creates an account, they will automatically be setup in the `Cognito User Pool`
+
+The `API Gateway` component acts as the gatekeeper to all backend services. By default API Gateway implements an account level rate limit. This is further broken down by setting specific request throttling limits on each API in the stage. A WAF ACL is also configured with a rate-based rule by IP address.
+
+The `API Gateway` uses an `Authorizer` to control access to the API using the `Cognito User Pool`. This means that a user must be signed in to the web application to make a request. The React app gets the users current session using `Auth.currentSession()` which returns a `CognitoUserSession` object which contains a JWT `accessToken`, `idToken`, and `refreshToken`. It then calls `getIdToken().getJwtToken()` on the `CognitoUserSession` object, and sets this as the bearer token in the `Authorization` header of the HTTP request.
+
+The user pool access token contains claims about the authenticated user, a list of the user's groups, and a list of scopes. The purpose of the access token is to authorize API operations in the context of the user in the user pool. The access token is represented as a JSON Web Token (JWT). The JWT signature is a hashed combination of the header and the payload. Amazon Cognito generates two pairs of RSA cryptographic keys for each user pool. One of the private keys is used to sign the token. `API Gateway` verifies the signature of the JWT token to make sure it is valid.
+
+`API Gateway` use proxy integration to route authorized requests to the relevant `Lambda` function. A separate `Lambda` function is used to ensure adoption of the least privilege principle. A set of `Lambda` functions are used to update `QLDB` as the source of truth for Bicycle Licence information.
+
+At the same time as `QLDB` is updated, `QLDB Streams` is configured to publish all changes onto a `Kinesis Data Stream`. `Lambda` functions are used to subscribe to the data stream, and then to update either `DynamoDB` or `Elasticsearch` with the relevant information, to show how streams processing provides an event driven architecture.
