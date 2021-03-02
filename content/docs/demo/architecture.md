@@ -37,9 +37,56 @@ The Web UI is a `React` application built using the `Amplify` framework that get
 
 The `API Gateway` component acts as the gatekeeper to all backend services. By default API Gateway implements an account level rate limit. This is further broken down by setting specific request throttling limits on each API in the stage. A WAF ACL is also configured with a rate-based rule by IP address.
 
-The `API Gateway` uses an `Authorizer` to control access to the API using the `Cognito User Pool`. This means that a user must be signed in to the web application to make a request. The React app gets the users current session using `Auth.currentSession()` which returns a `CognitoUserSession` object which contains a JWT `accessToken`, `idToken`, and `refreshToken`. It then calls `getIdToken().getJwtToken()` on the `CognitoUserSession` object, and sets this as the bearer token in the `Authorization` header of the HTTP request.
+The `API Gateway` uses an `Authorizer` to control access to the API using the `Cognito User Pool`. This means that a user must be signed in to the web application to make a request. The React app gets the users current session using `Auth.currentSession()` which returns a `CognitoUserSession` object which contains a JSON Web Token (JWT) `accessToken`, `idToken`, and `refreshToken`. It then calls `getIdToken().getJwtToken()` on the `CognitoUserSession` object, and sets this as the bearer token in the `Authorization` header of the HTTP request.
 
-The user pool access token contains claims about the authenticated user, a list of the user's groups, and a list of scopes. The purpose of the access token is to authorize API operations in the context of the user in the user pool. The access token is represented as a JSON Web Token (JWT). The JWT signature is a hashed combination of the header and the payload. Amazon Cognito generates two pairs of RSA cryptographic keys for each user pool. One of the private keys is used to sign the token. `API Gateway` verifies the signature of the JWT token to make sure it is valid.
+The user pool access token contains claims about the authenticated user. The purpose of the token is to authorise API operations in the context of the user in the user pool e.g. is this person authorised to call this operation. 
+
+The ID token is a JSON Web Token which consists of three sections:
+
+1. Header
+2. Payload
+3. Signature
+
+The header contains the key id (kid) indicating which key was used, and the algorithm, to secure the JWT token. An example of the header is shown below:
+
+```json
+{
+  "kid": "InmBs3RFeOvQByvu3eeup3CXFhK1ue3yxRJFkrC+FJk=",
+  "alg": "RS256"
+}
+```
+
+The payload contains claims about the authenticated user. An example is shown below:
+
+```json
+{
+  "sub": "3accc363-3b47-4c30-8c76-d63c9d919e64",
+  "email_verified": true,
+  "iss": "https://cognito-idp.eu-west-1.amazonaws.com/{userPoolId}",
+  "phone_number_verified": false,
+  "cognito:username": "name",
+  "aud": "6s7aqshim3e29bg4slrs7bp0ud",
+  "event_id": "394c766b-44b9-4355-807b-e455dfb1715e",
+  "token_use": "id",
+  "auth_time": 1612980614,
+  "phone_number": "+4401234567890",
+  "exp": 1614641916,
+  "iat": 1614638316,
+  "email": "example@email.com"
+}
+```
+
+The `sub` claim is a UUID for the authenticated user as the username may not be unique.
+
+The `iss` claim specifies the individual user pool that is used.
+
+The `aud` claim contains the `client_id` that is used in the user authenticated.
+
+The `token_use` claim describes the intended purpose of this token. Its value is always `id` in the case of the ID token.
+
+The `auth_time` claim contains the time when the authentication occurred
+
+The signature of the ID token is calculated based on the header and payload of the JWT token. This signature is verified by API Gateway before accepting the token.
 
 `API Gateway` use proxy integration to route authorized requests to the relevant `Lambda` function. A separate `Lambda` function is used to ensure adoption of the least privilege principle. A set of `Lambda` functions are used to update `QLDB` as the source of truth for Bicycle Licence information.
 
