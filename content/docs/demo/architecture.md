@@ -78,11 +78,11 @@ The payload contains claims about the authenticated user. An example is shown be
 
 * The `sub` claim is a UUID for the authenticated user as the username may not be unique.
 * The `iss` claim specifies the individual user pool that is used.
-* The `aud` claim contains the `client_id` that is used in the user authenticated.
+* The `aud` claim contains the `App Client ID` of the Cognito application client being used.
 * The `token_use` claim describes the intended purpose of this token. Its value is always `id` in the case of the ID token.
 * The `auth_time` claim contains the time when the authentication occurred
 
-The signature of the ID token is calculated based on the header and payload of the JWT token. This signature is verified by API Gateway before accepting the token.
+The signature of the ID token is calculated based on the header and payload of the JWT token. This signature is verified by API Gateway before accepting the token. This is carried out by searching for the key with the key ID that matches the `kid`, then using libraries to decode the token and verify the signature. In addition, there are checks to ensure that the token is not expired, and that the `aud` specified in the payload matches the app client ID created in the `Cognito User Pool`.
 
 `API Gateway` use proxy integration to route authorized requests to the relevant `Lambda` function. A separate `Lambda` function is used to ensure adoption of the least privilege principle. A set of `Lambda` functions are used to update `QLDB` as the source of truth for Bicycle Licence information.
 
