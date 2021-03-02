@@ -9,3 +9,4 @@ The `Enquiry` screen displays details about all of the Bicycle Licence records t
 
 ![QLDB Demo Enquiry](/images/qldbdemo-enquiry.png)
 
+The record in `DynamoDB` does not contain any PII data such as first name, last name or address. This is to highlight another great use of `QLDB Streams` - filtering out data that is not wanted or desired in a downstream service.
