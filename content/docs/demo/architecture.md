@@ -76,15 +76,11 @@ The payload contains claims about the authenticated user. An example is shown be
 }
 ```
 
-The `sub` claim is a UUID for the authenticated user as the username may not be unique.
-
-The `iss` claim specifies the individual user pool that is used.
-
-The `aud` claim contains the `client_id` that is used in the user authenticated.
-
-The `token_use` claim describes the intended purpose of this token. Its value is always `id` in the case of the ID token.
-
-The `auth_time` claim contains the time when the authentication occurred
+* The `sub` claim is a UUID for the authenticated user as the username may not be unique.
+* The `iss` claim specifies the individual user pool that is used.
+* The `aud` claim contains the `client_id` that is used in the user authenticated.
+* The `token_use` claim describes the intended purpose of this token. Its value is always `id` in the case of the ID token.
+* The `auth_time` claim contains the time when the authentication occurred
 
 The signature of the ID token is calculated based on the header and payload of the JWT token. This signature is verified by API Gateway before accepting the token.
 
