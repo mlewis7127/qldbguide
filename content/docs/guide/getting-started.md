@@ -2,7 +2,7 @@
 title: "Getting Started"
 date: 2020-02-21T18:32:44Z
 lastmod: 2020-02-21
-weight: 3
+weight: 30
 draft: false
 ---
 
