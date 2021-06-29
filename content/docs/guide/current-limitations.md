@@ -44,36 +44,6 @@ Best practice is to ensure that the QLDB-assigned ID is also added to the applic
 
 {{< spacer >}}
 
-## IAM Permission Granularity
-
-Interaction with QLDB can be broken down into two areas:
-
-* Access to the control plane APIs via the QLDB class in the AWS SDK
-* Access to the transactional data plane via the QLDB Driver class in one of the officially supported drivers for QLDB
-
-You can use IAM to control access to the control plane APIs. These include APIs to create or delete a ledger, export the ledger, retrieve a block object, retrieve the digest or retrieve a revision data object. 
-
-All interaction to the transactional data plane to execute PartiQL statements against a ledger requires permission to the `qldb:SendCommand` action. This action allows for any PartiQL statement to be executed. This means it allows an application to create, query and modify all documents, as well as view the entire revision history for any document.
-
-{{< codeblock "language-yaml" >}}
-  Policies:
-    - Version: 2012-10-17
-      Statement:
-        - Effect: Allow 
-          Action:
-            - qldb:SendCommand
-          Resource: !Sub arn:aws:qldb:${AWS::Region}:${AWS::AccountId}:ledger/${QldbLedger}
-          
-{{< /codeblock  >}}
-
-Although there are no fine-grained permissions for executing PartiQL statements, a typical serverless application architecture for interacting with QLDB is shown below:
-
-![QLDB Example Architecture](/images/QLDB-Guide-Architecture.png)
-
-Best practice design would include assigning a unique IAM role per individual function, allowing access to be controlled.
-
-{{< spacer >}}
-
 ## PartiQL Operations Support
 
 As a result of the strong isolation levels offered by QLDB, there is limited support for PartiQL operations. For example:
