@@ -46,7 +46,7 @@ CREATE INDEX ON table (field)
 You can create a ledger directly via the AWS Command Line Interface (CLI), using the `createLedger` call. With this, you must specify a ledger name and a permissions mode. The only permissions mode currently supported is `ALLOW_ALL`.
 
 {{< codeblock "language-shell" >}}
-aws qldb create-ledger --name qldb-guide --permissions-mode ALLOW_ALL
+aws qldb create-ledger --name qldb-guide --permissions-mode STANDARD
 {{< /codeblock  >}}
 
 When you create a ledger, deletion protection is enabled by default. This is a feature in QLDB that prevents ledgers from being deleted by any user. You can disable deletion protection on ledger creation by using the `--no-deletion-protection` parameter.
@@ -81,7 +81,7 @@ Resources:
     Properties:
       Name: qldb-bicycle-licence-sam
       DeletionProtection: false
-      PermissionsMode: ALLOW_ALL
+      PermissionsMode: STANDARD
       Tags:
         - 
           Key: name
@@ -142,7 +142,7 @@ resources:
       Properties:
         Name: qldb-simple-demo-${self:provider.stage}
         DeletionProtection: false
-        PermissionsMode: ALLOW_ALL
+        PermissionsMode: STANDARD
         Tags:
           - 
             Key: name
