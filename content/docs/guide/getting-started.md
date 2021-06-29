@@ -8,7 +8,7 @@ draft: false
 
 ## Using AWS Console
 
-The first step is to create a ledger. In the AWS console, you specify a name for the ledger and any optional tags.
+The first step is to create a ledger. In the AWS console, you specify a name for the ledger, the permissions mode to use, and any optional tags.
 
 ![Create Ledger through Console](/images/qldb-create-ledger-console.png)
 
