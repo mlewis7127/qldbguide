@@ -55,12 +55,6 @@ The workaround is to stream out data to another database engine using QLDB strea
 
 {{< spacer >}}
 
-## KMS
-
-There is no current support for KMS CMKs for server-side encryption, only QLDB-managed KMS keys.
-
-{{< spacer >}}
-
 ## Backup and Restore
 
 While you can export ION documents to S3, there is no way to restore them right now.
